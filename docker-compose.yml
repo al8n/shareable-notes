@@ -1,0 +1,115 @@
+version: "3"
+services:
+  mongo:
+    image: mongo
+    container_name: "margin-mongo"
+    networks:
+      - margin
+    volumes:
+      - margin-mongo:/data/db
+    ports:
+      - "27017:27017"
+
+  share-microservice:
+    build:
+      context: .
+      dockerfile: share/Dockerfile
+    container_name: "margin-share-service"
+    volumes:
+      - /Users/Al/Development/margin/share/config.yml:/app/config.yml
+    ports:
+      - "8081:8080"
+      - "50052:50051"
+    networks:
+      - margin
+    depends_on:
+      - mongo
+      - zipkin
+      - consul
+
+  gateway:
+    build:
+      context: .
+      dockerfile: apigateway/Dockerfile
+    container_name: "margin-gateway"
+    volumes:
+      - /Users/Al/Development/margin/apigateway/config.yml:/app/config.yml
+    ports:
+      - "8080:8080"
+    networks:
+      - margin
+    depends_on:
+      - share-microservice
+      - zipkin
+      - consul
+
+  consul:
+    image: consul
+    container_name: "margin-consul"
+    command: agent -server -bootstrap -ui -client=0.0.0.0
+    ports:
+      - 8500:8500
+      - 8600:8600/udp
+    networks:
+      - margin
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: "margin-zipkin"
+    networks:
+      - margin
+    ports:
+      - "9411:9411"
+
+  cadvisor:
+    image: "gcr.io/google-containers/cadvisor"
+    container_name: "margin-cadvisor"
+    ports:
+      - "9091:8080"
+    networks:
+      - margin
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  prometheus:
+    image: prom/prometheus
+    container_name: "margin-prometheus"
+    ports:
+      - "9090:9090"
+    networks:
+      - margin
+    volumes:
+      - /Users/Al/Development/margin/conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - cadvisor
+      - grafana
+
+  grafana:
+    image: grafana/grafana
+    container_name: "margin-grafana"
+    ports:
+      - "9093:3000"
+    networks:
+      - margin
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=marin
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: "margin-exporter"
+    ports:
+      - "9092:9100"
+    networks:
+      - margin
+
+networks:
+  margin:
+    external: false
+
+volumes:
+  margin-mongo:
+    external: false

@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/api/annotations.proto";
+
+service Share {
+    rpc ShareNote(ShareNoteRequest) returns (ShareNoteResponse);
+    rpc PrivateNote(PrivateNoteRequest) returns (PrivateNoteResponse);
+    rpc GetNote(GetNoteRequest) returns (GetNoteResponse) {
+        option (google.api.http) = {get: "/v1/note/{id}"};
+    };
+}
+
+message PrivateNoteRequest {
+    string note_id = 1;
+}
+
+message PrivateNoteResponse {
+    string error = 1;
+}
+
+message ShareNoteRequest {
+    string name = 2;
+    string content = 3;
+}
+
+message ShareNoteResponse {
+    string url = 1;
+    string note_id = 2;
+    string error = 3;
+}
+
+message GetNoteRequest {
+    string id = 1;
+}
+
+message GetNoteResponse {
+    string name = 1;
+    string content = 2;
+    string error = 3;
+}

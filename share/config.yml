@@ -1,0 +1,96 @@
+address: "http://localhost:8080"
+host: "margin-share-service"
+service:
+  apis:
+    ShareNote:
+      path: "/v1"
+      method: "POST"
+      ratelimit:
+        delta: 1000
+        duration: 1s
+      breaker:
+        name: "ShareNote"
+        timeout: 30s
+    PrivateNote:
+      path: "/v1/private"
+      method: "POST"
+      ratelimit:
+        delta: 1000
+        duration: 1s
+      breaker:
+        name: "PrivateNote"
+        timeout: 30s
+    GetNote:
+      path: "/v1/note/{id}"
+      method: "GET"
+      ratelimit:
+        delta: 1000
+        duration: 1s
+      breaker:
+        name: "GetNote"
+        timeout: 30s
+consul:
+  client:
+    address: "margin-consul:8500"
+    scheme: "http"
+http:
+  name: "Share-Service-HTTP"
+  read-timeout: 15s
+  write-timeout: 15s
+grpc:
+  name: "Share-Service-GRPC"
+mongo:
+  auth:
+    username: margin
+    password: secret
+  hosts: ["margin-mongo:27017"]
+  database: uni
+  collection: users
+  connect-timeout: 30s
+
+zipkin:
+  bridge: true
+  tracer:
+    endpoint:
+      name: share
+      address: margin-gateway:8080
+  reporter:
+    url: margin-zipkin:9411/api/v2/spans
+
+prometheus:
+  path: "/metrics"
+  counter-options:
+    ShareNote:
+      namespace: share
+      name: note
+      help: "Total requests deal with by share_note"
+      subsystem: share
+    PrivateNote:
+      namespace: share
+      name: note
+      help: "Total requests deal with by private_note"
+      subsystem: private
+    GetNote:
+      namespace: share
+      name: note
+      help: "Total requests deal with by get_note"
+      subsystem: get
+  summary-options:
+    ShareNote:
+      namespace: share
+      name: note_duration
+      help: "share_note duration in seconds"
+      subsystem: share
+      label-names: ["success"]
+    PrivateNote:
+      namespace: share
+      name: note_duration
+      help: "private_note duration in seconds"
+      subsystem: private
+      label-names: ["success"]
+    GetNote:
+      namespace: share
+      name: note_duration
+      help: "get_note duration in seconds"
+      subsystem: get
+      label-names: ["success"]
