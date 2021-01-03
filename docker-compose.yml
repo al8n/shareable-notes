@@ -5,43 +5,46 @@ services:
     container_name: "margin-mongo"
     networks:
       - margin
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: margin
+#      MONGO_INITDB_ROOT_PASSWORD: secret
     volumes:
       - margin-mongo:/data/db
     ports:
       - "27017:27017"
 
-  share-microservice:
-    build:
-      context: .
-      dockerfile: share/Dockerfile
-    container_name: "margin-share-service"
-    volumes:
-      - /Users/Al/Development/margin/share/config.yml:/app/config.yml
-    ports:
-      - "8081:8080"
-      - "50052:50051"
-    networks:
-      - margin
-    depends_on:
-      - mongo
-      - zipkin
-      - consul
+#  share-microservice:
+#    build:
+#      context: ./share/build
+#      dockerfile: Dockerfile
+#    container_name: "margin-share-service"
+#    volumes:
+#      - /Users/Al/Development/margin/share/build/config.yml:/app/config.yml
+#    ports:
+#      - "8081:8080"
+#      - "50052:50051"
+#    networks:
+#      - margin
+#    depends_on:
+#      - mongo
+#      - tracer
+#      - consul
 
-  gateway:
-    build:
-      context: .
-      dockerfile: apigateway/Dockerfile
-    container_name: "margin-gateway"
-    volumes:
-      - /Users/Al/Development/margin/apigateway/config.yml:/app/config.yml
-    ports:
-      - "8080:8080"
-    networks:
-      - margin
-    depends_on:
-      - share-microservice
-      - zipkin
-      - consul
+#  gateway:
+#    build:
+#      context: ./apigateway/build
+#      dockerfile: Dockerfile
+#    container_name: "margin-gateway"
+#    volumes:
+#      - /Users/Al/Development/margin/apigateway/build/config.yml:/app/config.yml
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - margin
+#    depends_on:
+#      - share-microservice
+#      - tracer
+#      - consul
 
   consul:
     image: consul
@@ -52,14 +55,6 @@ services:
       - 8600:8600/udp
     networks:
       - margin
-
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: "margin-zipkin"
-    networks:
-      - margin
-    ports:
-      - "9411:9411"
 
   cadvisor:
     image: "gcr.io/google-containers/cadvisor"
@@ -95,7 +90,7 @@ services:
     networks:
       - margin
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=marin
+      - GF_SECURITY_ADMIN_PASSWORD=margin
       - GF_USERS_ALLOW_SIGN_UP=false
 
   node-exporter:

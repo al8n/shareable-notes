@@ -3,6 +3,8 @@ package utils
 import (
 	"errors"
 	"fmt"
+	"github.com/opentracing/opentracing-go"
+	otlog "github.com/opentracing/opentracing-go/log"
 )
 
 
@@ -60,4 +62,13 @@ func Err2Str(err error) string {
 		return ""
 	}
 	return err.Error()
+}
+
+func SetTracerSpanError(span opentracing.Span, err error)  {
+	span.SetTag("error", true)
+	span.LogFields(otlog.Error(err))
+}
+
+func SetHTTPStatusTracerSpan(span opentracing.Span, code int)  {
+	span.SetTag("status", code)
 }

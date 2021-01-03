@@ -9,7 +9,6 @@ import (
 	boothttp "github.com/ALiuGuanyan/micro-boot/http"
 	bootmongo "github.com/ALiuGuanyan/micro-boot/mongo"
 	bootprom "github.com/ALiuGuanyan/micro-boot/prometheus"
-	bootzipkin "github.com/ALiuGuanyan/micro-boot/zipkin"
 	"github.com/imdario/mergo"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
@@ -42,9 +41,6 @@ type Config struct {
 
 	// Mongo
 	Mongo bootmongo.ClientOptions `json:"mongo" yaml:"mongo"`
-
-	// Zipkin
-	Zipkin bootzipkin.Config       `json:"zipkin" yaml:"zipkin"`
 
 	// Prometheus
 	Prom  bootprom.Config          `json:"prometheus" yaml:"prometheus"`
@@ -93,7 +89,6 @@ func (c *Config) Initialize(name string) (err error) {
 	}
 
 
-
 	if !config.HTTP.Runnable && !config.HTTPS.Runnable && !config.GRPC.Runnable {
 		return common.ErrorNoServicesConfig
 	}
@@ -113,7 +108,6 @@ func (c *Config) BindFlags(fs *bootflag.FlagSet)  {
 	c.HTTPS.BindFlags(fs)
 	c.GRPC.BindFlags(fs)
 	c.Mongo.BindFlags(fs)
-	c.Zipkin.BindFlags(fs)
 	c.Prom.BindFlags(fs)
 	c.Service.BindFlags(fs)
 	c.Consul.BindFlags(fs)

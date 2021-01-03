@@ -12,13 +12,10 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/ratelimit"
 	"github.com/go-kit/kit/tracing/opentracing"
-	"github.com/go-kit/kit/tracing/zipkin"
 	"github.com/go-kit/kit/transport"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 	stdopentracing "github.com/opentracing/opentracing-go"
-	stdzipkin "github.com/openzipkin/zipkin-go"
-
 	"github.com/sony/gobreaker"
 	"golang.org/x/time/rate"
 	"net/url"
@@ -27,21 +24,21 @@ import (
 
 // NewHTTPHandler returns an HTTP handler that makes a set of endpoints
 // available on predefined paths.
-func NewHTTPHandler(endpoints serviceendpoint.Set, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer, logger log.Logger, apis bootapi.APIs) *mux.Router {
+func NewHTTPHandler(endpoints serviceendpoint.Set, otTracer stdopentracing.Tracer, logger log.Logger, apis bootapi.APIs) *mux.Router {
 
 	options := []httptransport.ServerOption{
 		httptransport.ServerErrorEncoder(httpcodec.ErrorEncoder),
 		httptransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 	}
 
-	if zipkinTracer != nil {
-		// Zipkin HTTP Server Trace can either be instantiated per endpoint with a
-		// provided operation name or a global tracing service can be instantiated
-		// without an operation name and fed to each Go kit endpoint as ServerOption.
-		// In the latter case, the operation name will be the endpoint's http method.
-		// We demonstrate a global tracing service here.
-		options = append(options, zipkin.HTTPServerTrace(zipkinTracer))
-	}
+	//if zipkinTracer != nil {
+	//	// Zipkin HTTP Server Trace can either be instantiated per endpoint with a
+	//	// provided operation name or a global tracing service can be instantiated
+	//	// without an operation name and fed to each Go kit endpoint as ServerOption.
+	//	// In the latter case, the operation name will be the endpoint's http method.
+	//	// We demonstrate a global tracing service here.
+	//	options = append(options, zipkin.HTTPServerTrace(zipkinTracer))
+	//}
 
 
 	var (
@@ -83,7 +80,7 @@ func NewHTTPHandler(endpoints serviceendpoint.Set, otTracer stdopentracing.Trace
 	return r
 }
 
-func NewHTTPClient(instance string, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer, logger log.Logger, apis bootapi.APIs) (shareservice.Service, error) {
+func NewHTTPClient(instance string, otTracer stdopentracing.Tracer, logger log.Logger, apis bootapi.APIs) (shareservice.Service, error) {
 	// Quickly sanitize the instance string.
 	if !strings.HasPrefix(instance, "http") {
 		instance = "http://" + instance
@@ -93,17 +90,6 @@ func NewHTTPClient(instance string, otTracer stdopentracing.Tracer, zipkinTracer
 		return nil, err
 	}
 
-
-	// global client middlewares
-	var options []httptransport.ClientOption
-
-	if zipkinTracer != nil {
-		// Zipkin HTTP Client Trace can either be instantiated per endpoint with a
-		// provided operation name or a global tracing client can be instantiated
-		// without an operation name and fed to each Go kit endpoint as ClientOption.
-		// In the latter case, the operation name will be the endpoint's http method.
-		options = append(options, zipkin.HTTPClientTrace(zipkinTracer))
-	}
 
 	// Each individual endpoint is an http/transport.Client (which implements
 	// endpoint.Endpoint) that gets wrapped with various middlewares. If you
@@ -121,13 +107,10 @@ func NewHTTPClient(instance string, otTracer stdopentracing.Tracer, zipkinTracer
 			copyURL(u, sn.Path),
 			httpencode.GenericRequest,
 			httpdecode.ShareNoteResponse,
-			append(options, httptransport.ClientBefore(opentracing.ContextToHTTP(otTracer, logger)))...,
+			httptransport.ClientBefore(opentracing.ContextToHTTP(otTracer, logger)),
 		).Endpoint()
 
 		shareNoteEndpoint = opentracing.TraceClient(otTracer, name)(shareNoteEndpoint)
-		if zipkinTracer != nil {
-			shareNoteEndpoint = zipkin.TraceEndpoint(zipkinTracer, name)(shareNoteEndpoint)
-		}
 
 		// We construct a single ratelimiter middleware, to limit the total outgoing
 		// QPS from this client to all methods on the remote instance. We also
@@ -159,13 +142,10 @@ func NewHTTPClient(instance string, otTracer stdopentracing.Tracer, zipkinTracer
 			copyURL(u, pn.Path),
 			httpencode.GenericRequest,
 			httpdecode.PrivateNoteResponse,
-			append(options, httptransport.ClientBefore(opentracing.ContextToHTTP(otTracer, logger)))...,
+			httptransport.ClientBefore(opentracing.ContextToHTTP(otTracer, logger)),
 		).Endpoint()
 		privateNoteEndpoint = opentracing.TraceClient(otTracer, name)(privateNoteEndpoint)
 
-		if zipkinTracer != nil {
-			privateNoteEndpoint = zipkin.TraceEndpoint(zipkinTracer, name)(privateNoteEndpoint)
-		}
 
 		privateNoteEndpoint = ratelimit.NewErroringLimiter(
 			rate.NewLimiter(
@@ -190,13 +170,9 @@ func NewHTTPClient(instance string, otTracer stdopentracing.Tracer, zipkinTracer
 			copyURL(u, gn.Path),
 			httpencode.GenericRequest,
 			httpdecode.PrivateNoteResponse,
-			append(options, httptransport.ClientBefore(opentracing.ContextToHTTP(otTracer, logger)))...,
+			httptransport.ClientBefore(opentracing.ContextToHTTP(otTracer, logger)),
 		).Endpoint()
 		getNoteEndpoint = opentracing.TraceClient(otTracer, name)(getNoteEndpoint)
-
-		if zipkinTracer != nil {
-			getNoteEndpoint = zipkin.TraceEndpoint(zipkinTracer, name)(getNoteEndpoint)
-		}
 
 		getNoteEndpoint = ratelimit.NewErroringLimiter(
 			rate.NewLimiter(

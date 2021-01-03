@@ -40,3 +40,4 @@ func LoggingMiddleware(logger log.Logger) endpoint.Middleware {
 		}
 	}
 }
+

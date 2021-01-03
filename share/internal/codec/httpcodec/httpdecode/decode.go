@@ -13,8 +13,12 @@ import (
 
 var ErrBadRouting = errors.New("inconsistent mapping between route and handler (programmer error)")
 
-func GetNoteRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var req requests.GetNoteRequest
+func GetNoteRequest(ctx context.Context, r *http.Request) (interface{}, error) {
+
+
+	var (
+		req requests.GetNoteRequest
+	)
 
 	bid, ok := mux.Vars(r)["id"]
 	if !ok {
@@ -30,7 +34,8 @@ func GetNoteRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	return req, nil
 }
 
-func PrivateNoteRequest(_ context.Context, r *http.Request) (interface{}, error)  {
+func PrivateNoteRequest(ctx context.Context, r *http.Request) (interface{}, error)  {
+
 	var req requests.PrivateNoteRequest
 
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -38,11 +43,14 @@ func PrivateNoteRequest(_ context.Context, r *http.Request) (interface{}, error)
 		return nil, err
 	}
 
+
 	return req, nil
 }
 
-func ShareNoteRequest(_ context.Context, r *http.Request) (interface{}, error)  {
-	var req requests.ShareNoteRequest
+func ShareNoteRequest(ctx context.Context, r *http.Request) (interface{}, error)  {
+	var (
+		req requests.ShareNoteRequest
+	)
 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {

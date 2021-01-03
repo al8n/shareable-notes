@@ -34,9 +34,11 @@ func GenericRequest(_ context.Context, r *http.Request, request interface{}) err
 	return nil
 }
 
-func ShareNoteResponse(ctx context.Context, w http.ResponseWriter, resp interface{}) error  {
+func ShareNoteResponse(ctx context.Context, w http.ResponseWriter, resp interface{}) (err error)  {
+
 	response, ok := resp.(responses.ShareNoteResponse)
 	if !ok {
+
 		httpcodec.ErrorEncoder(
 			ctx,
 			utils.ErrorCodecCasting(
@@ -46,6 +48,7 @@ func ShareNoteResponse(ctx context.Context, w http.ResponseWriter, resp interfac
 			w)
 		return nil
 	}
+
 	if response.Error != "" {
 		httpcodec.ErrorEncoder(
 			ctx,
@@ -60,6 +63,7 @@ func ShareNoteResponse(ctx context.Context, w http.ResponseWriter, resp interfac
 }
 
 func PrivateNoteResponse(ctx context.Context, w http.ResponseWriter, resp interface{}) error  {
+
 	response, ok := resp.(responses.PrivateNoteResponse)
 	if !ok {
 		httpcodec.ErrorEncoder(
@@ -85,6 +89,7 @@ func PrivateNoteResponse(ctx context.Context, w http.ResponseWriter, resp interf
 }
 
 func GetNoteResponse(ctx context.Context, w http.ResponseWriter, resp interface{}) error  {
+
 	response, ok := resp.(responses.GetNoteResponse)
 	if !ok {
 		httpcodec.ErrorEncoder(
@@ -96,6 +101,7 @@ func GetNoteResponse(ctx context.Context, w http.ResponseWriter, resp interface{
 			w)
 		return nil
 	}
+
 	if response.Error != "" {
 		httpcodec.ErrorEncoder(
 			ctx,

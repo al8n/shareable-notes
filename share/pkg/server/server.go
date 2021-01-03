@@ -15,12 +15,12 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/hashicorp/consul/api"
 	stdopentracing "github.com/opentracing/opentracing-go"
-	zipkinot "github.com/openzipkin-contrib/zipkin-go-opentracing"
-	"github.com/openzipkin/zipkin-go"
-	"github.com/openzipkin/zipkin-go/model"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	jaeger "github.com/uber/jaeger-client-go"
+	jaegerconfig "github.com/uber/jaeger-client-go/config"
 	"google.golang.org/grpc"
+	"io"
 	"net"
 	"net/http"
 	"os"
@@ -52,6 +52,7 @@ type Server struct {
 	grpcListener net.Listener
 	grpcConsulRegister *consulsd.Registrar
 
+	tracerCloser io.Closer
 
 	logger log.Logger
 	wg sync.WaitGroup
@@ -68,39 +69,25 @@ func (s *Server) Serve() (err error) {
 		s.logger = logger
 	}
 
-	var zipkinTracer *zipkin.Tracer
-	{
-		if cfg.Zipkin.Reporter.URL != "" {
-			var (
-				err error
-				lep *model.Endpoint
-			)
-
-			lep, err = cfg.Zipkin.Tracer.LocalEndpoint.Standardize()
-			if err != nil {
-				logger.Log("err", err)
-				panic(err)
-			}
-
-			zipkinTracer, err = zipkin.NewTracer(cfg.Zipkin.StandardReporter(), zipkin.WithLocalEndpoint(lep))
-			if err != nil {
-				logger.Log("err", err)
-				panic(err)
-			}
-
-			if !cfg.Zipkin.Bridge {
-				logger.Log("tracer", "Zipkin", "type", "Native", "URL", cfg.Zipkin.Reporter.URL)
-			}
-		}
-	}
 
 	var tracer stdopentracing.Tracer
 	{
-		if cfg.Zipkin.Bridge && zipkinTracer != nil {
-			logger.Log("tracer", "Zipkin", "type", "OpenTracing", "URL", cfg.Zipkin.Reporter.URL)
-			tracer = zipkinot.Wrap(zipkinTracer)
-			zipkinTracer = nil // do not instrument with both native tracer and opentracing bridge
+		jaegerCfg := &jaegerconfig.Configuration{
+			ServiceName: cfg.Name,
+			Sampler: &jaegerconfig.SamplerConfig{
+				Type: "const",
+				Param: 1,
+			},
+			Reporter: &jaegerconfig.ReporterConfig{
+				LogSpans: true,
+			},
 		}
+
+		tracer, s.tracerCloser, err = jaegerCfg.NewTracer(jaegerconfig.Logger(jaeger.StdLogger))
+		if err != nil {
+			return err
+		}
+		stdopentracing.SetGlobalTracer(tracer)
 	}
 
 	// Create the (sparse) metrics we'll use in the service. They, too, are
@@ -140,20 +127,20 @@ func (s *Server) Serve() (err error) {
 		grpcAddr = ":" + cfg.GRPC.Port
 	)
 	{
-		service, err = shareservice.New(logger, ctrs)
+		service, err = shareservice.New(logger, ctrs, tracer)
 		if err != nil {
 			logger.Log("err", err)
 			return err
 		}
 
-		endpoints, err = shareendpoint.New(service, logger, duration, tracer, zipkinTracer)
+		endpoints, err = shareendpoint.New(service, logger, duration, tracer)
 		if err != nil {
 			logger.Log("err", err)
 			return err
 		}
 
 		if cfg.HTTP.Runnable || cfg.HTTPS.Runnable {
-			s.router = sharetransport.NewHTTPHandler(*endpoints, tracer, zipkinTracer, logger, cfg.Service.APIs)
+			s.router = sharetransport.NewHTTPHandler(*endpoints, tracer, logger, cfg.Service.APIs)
 			s.router.Handle(cfg.Prom.Path, promhttp.Handler())
 		}
 
@@ -173,6 +160,7 @@ func (s *Server) Serve() (err error) {
 				s.wg.Add(1)
 				logger.Log("transport", "HTTP", "addr", httpAddr)
 				s.httpConsulRegister.Register()
+				//ListenAndServe(s.router, s.httpListener, "share")
 				http.Serve(s.httpListener, s.router)
 				s.wg.Done()
 			}()
@@ -208,7 +196,7 @@ func (s *Server) Serve() (err error) {
 
 			s.grpcServer = grpc.NewServer(grpc.UnaryInterceptor(kitgrpc.Interceptor))
 
-			s.shareServer = sharetransport.NewGRPCServer(*endpoints, tracer, zipkinTracer, logger)
+			s.shareServer = sharetransport.NewGRPCServer(*endpoints, tracer, logger)
 
 			pb.RegisterShareServer(s.grpcServer, s.shareServer)
 
@@ -249,6 +237,8 @@ func (s *Server) Close() (err error) {
 		s.logger.Log("transport", "gRPC", "op", "Close", "error", s.grpcListener.Close())
 	}
 
+	s.tracerCloser.Close()
+
 	return nil
 }
 
@@ -257,10 +247,16 @@ func NewConsulGRPCRegister(logger log.Logger) (register *consulsd.Registrar, err
 		cfg *config.Config
 		consulClient *api.Client
 		client consulsd.Client
+		apiCfg *api.Config
 	)
 
 	cfg = config.GetConfig()
-	consulClient, err = api.NewClient(cfg.Consul.Client.Standardize())
+
+	apiCfg = cfg.Consul.Client.Standardize()
+	apiCfg.Address = fmt.Sprintf("%s:%d", cfg.Consul.Agent.IP,cfg.Consul.Agent.Port)
+
+	consulClient, err = api.NewClient(apiCfg)
+
 	if err != nil {
 		return nil, err
 	}
@@ -282,10 +278,14 @@ func NewConsulHTTPRegister(logger log.Logger) (register *consulsd.Registrar, err
 		cfg *config.Config
 		consulClient *api.Client
 		client consulsd.Client
+		apiCfg *api.Config
 	)
 
 	cfg = config.GetConfig()
-	consulClient, err = api.NewClient(cfg.Consul.Client.Standardize())
+	apiCfg = cfg.Consul.Client.Standardize()
+	apiCfg.Address = fmt.Sprintf("%s:%d", cfg.Consul.Agent.IP,cfg.Consul.Agent.Port)
+
+	consulClient, err = api.NewClient(apiCfg)
 	if err != nil {
 		return nil, err
 	}
@@ -307,10 +307,15 @@ func NewConsulHTTPSRegister(logger log.Logger) (register *consulsd.Registrar, er
 		cfg *config.Config
 		consulClient *api.Client
 		client consulsd.Client
+		apiCfg *api.Config
 	)
 
 	cfg = config.GetConfig()
-	consulClient, err = api.NewClient(cfg.Consul.Client.Standardize())
+
+	apiCfg = cfg.Consul.Client.Standardize()
+	apiCfg.Address = fmt.Sprintf("%s:%d", cfg.Consul.Agent.IP,cfg.Consul.Agent.Port)
+
+	consulClient, err = api.NewClient(apiCfg)
 	if err != nil {
 		return nil, err
 	}

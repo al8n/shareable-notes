@@ -13,11 +13,9 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/ratelimit"
 	"github.com/go-kit/kit/tracing/opentracing"
-	"github.com/go-kit/kit/tracing/zipkin"
 	"github.com/go-kit/kit/transport"
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 	stdopentracing "github.com/opentracing/opentracing-go"
-	stdzipkin "github.com/openzipkin/zipkin-go"
 	"github.com/sony/gobreaker"
 	"golang.org/x/time/rate"
 	"google.golang.org/grpc"
@@ -53,23 +51,23 @@ func (g GRPCServer) GetNote(ctx context.Context, request *pb.GetNoteRequest) (*p
 	return resp.(*pb.GetNoteResponse), nil
 }
 
-func NewGRPCServer(set serviceendpoint.Set, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer, logger log.Logger) pb.ShareServer  {
+func NewGRPCServer(set serviceendpoint.Set, otTracer stdopentracing.Tracer, logger log.Logger) pb.ShareServer  {
 	options := []grpctransport.ServerOption{
 		grpctransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 	}
 
-	if zipkinTracer != nil {
-		// Zipkin GRPC Server Trace can either be instantiated per gRPC method with a
-		// provided operation name or a global tracing service can be instantiated
-		// without an operation name and fed to each Go kit gRPC server as a
-		// ServerOption.
-		// In the latter case, the operation name will be the endpoint's grpc method
-		// path if used in combination with the Go kit gRPC Interceptor.
-		//
-		// In this example, we demonstrate a global Zipkin tracing service with
-		// Go kit gRPC Interceptor.
-		options = append(options, zipkin.GRPCServerTrace(zipkinTracer))
-	}
+	//if zipkinTracer != nil {
+	//	// Zipkin GRPC Server Trace can either be instantiated per gRPC method with a
+	//	// provided operation name or a global tracing service can be instantiated
+	//	// without an operation name and fed to each Go kit gRPC server as a
+	//	// ServerOption.
+	//	// In the latter case, the operation name will be the endpoint's grpc method
+	//	// path if used in combination with the Go kit gRPC Interceptor.
+	//	//
+	//	// In this example, we demonstrate a global Zipkin tracing service with
+	//	// Go kit gRPC Interceptor.
+	//	options = append(options, zipkin.GRPCServerTrace(zipkinTracer))
+	//}
 
 	return &GRPCServer{
 		shareNote:   grpctransport.NewServer(
@@ -114,27 +112,13 @@ func NewGRPCServer(set serviceendpoint.Set, otTracer stdopentracing.Tracer, zipk
 	}
 }
 
-func NewGRPCClient(conn *grpc.ClientConn, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer, logger log.Logger, apis bootapi.APIs) shareservice.Service {
+func NewGRPCClient(conn *grpc.ClientConn, otTracer stdopentracing.Tracer, logger log.Logger, apis bootapi.APIs) shareservice.Service {
 
 	// global client middlewares
 	var (
 		options []grpctransport.ClientOption
 		serviceName = "pb.Share"
 	)
-
-
-
-	if zipkinTracer != nil {
-		// Zipkin GRPC Client Trace can either be instantiated per gRPC method with a
-		// provided operation name or a global tracing client can be instantiated
-		// without an operation name and fed to each Go kit client as ClientOption.
-		// In the latter case, the operation name will be the endpoint's grpc method
-		// path.
-		//
-		// In this example, we demonstrace a global tracing client.
-		options = append(options, zipkin.GRPCClientTrace(zipkinTracer))
-
-	}
 
 	// Each individual endpoint is an grpc/transport.Client (which implements
 	// endpoint.Endpoint) that gets wrapped with various middlewares. If you

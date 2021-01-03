@@ -5,6 +5,7 @@ import (
 	"github.com/ALiuGuanyan/margin/share/internal/repositories"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
+	stdopentracing "github.com/opentracing/opentracing-go"
 )
 
 const (
@@ -20,7 +21,7 @@ type Service interface {
 }
 
 // New returns a basic Service with all of the expected middlewares wired in.
-func New(logger log.Logger, counters map[string]metrics.Counter) (svc Service,  err error) {
+func New(logger log.Logger, counters map[string]metrics.Counter, tracer stdopentracing.Tracer) (svc Service,  err error) {
 
 	svc, err = NewBasicService()
 	if err != nil {
@@ -29,6 +30,7 @@ func New(logger log.Logger, counters map[string]metrics.Counter) (svc Service,  
 
 	svc = LoggingMiddleware(logger)(svc)
 	svc = InstrumentingMiddleware(counters)(svc)
+	svc = TracingMiddleware(tracer)(svc)
 
 	return svc, nil
 }

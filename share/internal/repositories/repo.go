@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/base64"
 	"github.com/ALiuGuanyan/margin/share/config"
+	"github.com/ALiuGuanyan/margin/share/internal/utils"
 	"github.com/ALiuGuanyan/margin/share/model"
+	stdopentracing "github.com/opentracing/opentracing-go"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -12,6 +14,7 @@ import (
 	"time"
 )
 
+const mongoOPName = "MongoDB"
 
 type Repo struct {
 	MongoDB *mongo.Client
@@ -44,7 +47,12 @@ func (repo Repo) ShareNote(ctx context.Context, name, content string) (url, shar
 		rst *mongo.InsertOneResult
 		collection *mongo.Collection
 		note *model.Note
+		span stdopentracing.Span
+		spanCtx context.Context
 	)
+
+	span, spanCtx = stdopentracing.StartSpanFromContext(ctx, mongoOPName)
+	defer span.Finish()
 
 	collection = repo.MongoDB.Database(cfg.Mongo.DB).Collection(cfg.Mongo.Collection)
 
@@ -57,13 +65,15 @@ func (repo Repo) ShareNote(ctx context.Context, name, content string) (url, shar
 		UpdatedAt:     now,
 	}
 
-	rst, err = collection.InsertOne(ctx, note)
+	rst, err = collection.InsertOne(spanCtx, note)
+	span.LogKV("operation",  "share note", "db.insertOne", name)
 	if err != nil {
+		utils.SetTracerSpanError(span, err)
 		return "", "", err
 	}
 
 	shareID = rst.InsertedID.(primitive.ObjectID).Hex()
-	url = cfg.Address + "/share/note/" + base64.URLEncoding.EncodeToString([]byte(shareID))
+	url = cfg.Address + "/share/v1/note/" + base64.URLEncoding.EncodeToString([]byte(shareID))
 	return
 }
 
@@ -72,14 +82,24 @@ func (repo Repo) PrivateNote(ctx context.Context, id string) (err error)  {
 		cfg = config.GetConfig()
 		collection *mongo.Collection
 		oid primitive.ObjectID
+		span stdopentracing.Span
+		spanCtx context.Context
 	)
+
+	span, spanCtx = stdopentracing.StartSpanFromContext(ctx, mongoOPName)
+	defer span.Finish()
+
 	collection = repo.MongoDB.Database(cfg.Mongo.DB).Collection(cfg.Mongo.Collection)
+
+	span.LogKV("operation",  "private note", "db.updateOne", id)
 
 	oid, err = primitive.ObjectIDFromHex(id)
 	if err != nil {
+		utils.SetTracerSpanError(span, err)
 		return err
 	}
-	_, err = collection.UpdateOne(ctx, bson.M{"_id": oid}, bson.D{
+
+	_, err = collection.UpdateOne(spanCtx, bson.M{"_id": oid}, bson.D{
 		{
 			"$set",
 			bson.D{
@@ -90,6 +110,7 @@ func (repo Repo) PrivateNote(ctx context.Context, id string) (err error)  {
 	})
 
 	if err != nil {
+		utils.SetTracerSpanError(span, err)
 		return err
 	}
 
@@ -103,16 +124,24 @@ func (repo Repo) GetNote(ctx context.Context, id string) (name, content string, 
 		collection *mongo.Collection
 		note model.Note
 		oid primitive.ObjectID
+		span stdopentracing.Span
+		spanCtx context.Context
 	)
+
+	span, spanCtx = stdopentracing.StartSpanFromContext(ctx, mongoOPName)
+	defer span.Finish()
+
+	span.LogKV("operation",  "get note", "db.findOne", id)
 
 	collection = repo.MongoDB.Database(cfg.Mongo.DB).Collection(cfg.Mongo.Collection)
 
 	oid, err = primitive.ObjectIDFromHex(id)
 	if err != nil {
+		utils.SetTracerSpanError(span, err)
 		return "", "", err
 	}
 
-	err = collection.FindOne(ctx,
+	err = collection.FindOne(spanCtx,
 		bson.D{
 			{
 				Key: "_id",
@@ -121,6 +150,7 @@ func (repo Repo) GetNote(ctx context.Context, id string) (name, content string, 
 		},
 	).Decode(&note)
 	if err != nil {
+		utils.SetTracerSpanError(span, err)
 		return "", "", err
 	}
 

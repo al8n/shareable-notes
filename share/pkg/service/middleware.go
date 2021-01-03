@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
+	stdopentracing "github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 )
 
 type Middleware func(Service) Service
@@ -74,4 +76,63 @@ func InstrumentingMiddleware(ctrs map[string]metrics.Counter) Middleware  {
 	}
 }
 
+type tracerMiddleware struct {
+	tracer stdopentracing.Tracer
+	next Service
+}
 
+func TracingMiddleware(tracer stdopentracing.Tracer) Middleware {
+	return func(next Service) Service {
+		return tracerMiddleware{
+			tracer: tracer,
+			next:  next,
+		}
+	}
+}
+
+func (mw tracerMiddleware) PrivateNote(ctx context.Context, id string) (err error) {
+	var (
+		span stdopentracing.Span
+		spanCtx context.Context
+	)
+
+	span, spanCtx = stdopentracing.StartSpanFromContext(ctx, "Private Note Service")
+	defer span.Finish()
+
+	span.SetTag(string(ext.Component), "ServerMiddleware")
+	span.SetTag("id", id)
+
+	err = mw.next.PrivateNote(spanCtx, id)
+	span.LogKV("error", err)
+	return
+}
+
+func (mw tracerMiddleware) ShareNote(ctx context.Context, name, content string) (url, shareID string, err error) {
+	var (
+		span stdopentracing.Span
+		spanCtx context.Context
+	)
+
+	span, spanCtx = stdopentracing.StartSpanFromContext(ctx, "Share Note Service")
+	defer span.Finish()
+
+	url, shareID, err = mw.next.ShareNote(spanCtx, name, content)
+	span.SetTag("url", url)
+	span.LogKV("error", err)
+	return
+}
+
+func (mw tracerMiddleware) GetNote(ctx context.Context, id string) (name, content string, err error)  {
+	var (
+		span stdopentracing.Span
+		spanCtx context.Context
+	)
+
+	span, spanCtx = stdopentracing.StartSpanFromContext(ctx, "Get Note Service")
+	defer span.Finish()
+
+	name, content, err = mw.next.GetNote(spanCtx, id)
+	span.SetTag("name", name)
+	span.LogKV("error", err)
+	return
+}

@@ -7,6 +7,7 @@ import (
 )
 
 type Agent struct {
+	Address string `json:"address" yaml:"address"`
 	IP       string  `json:"ip" yaml:"ip"`
 	Tags     []string  `json:"tags" yaml:"tags"`
 	Port     int  `json:"port" yaml:"port"`
@@ -15,7 +16,6 @@ type Agent struct {
 }
 
 func (a *Agent) BindFlags(fs *bootflag.FlagSet)  {
-
 	fs.StringVar(&a.IP, "consul-agent-ip", "", "specify the ip for consul agent")
 	fs.IntVar(&a.Port, "consul-agent-port", 8500, "specify the port for consul agent")
 	fs.DurationVar(&a.Interval, "consul-agent-interval", 10 * time.Second, "specify the port for consul agent")

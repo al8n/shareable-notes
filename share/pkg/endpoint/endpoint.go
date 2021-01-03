@@ -13,11 +13,7 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/kit/ratelimit"
-	"github.com/go-kit/kit/tracing/opentracing"
-	"github.com/go-kit/kit/tracing/zipkin"
-
 	stdopentracing "github.com/opentracing/opentracing-go"
-	stdzipkin "github.com/openzipkin/zipkin-go"
 	"github.com/sony/gobreaker"
 	"golang.org/x/time/rate"
 )
@@ -83,7 +79,7 @@ func (s Set) PrivateNote(ctx context.Context, id string) (err error)  {
 	return utils.Str2Err(response.Error)
 }
 
-func New(svc shareservice.Service, logger log.Logger, duration map[string]metrics.Histogram, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer) (set *Set, err error) {
+func New(svc shareservice.Service, logger log.Logger, duration map[string]metrics.Histogram, tracer stdopentracing.Tracer) (set *Set, err error) {
 	apis := config.GetConfig().Service.APIs
 
 	set = &Set{
@@ -92,8 +88,7 @@ func New(svc shareservice.Service, logger log.Logger, duration map[string]metric
 			apis[shareservice.ShareNoteServiceName],
 			logger,
 			duration[shareservice.ShareNoteServiceName],
-			otTracer,
-			zipkinTracer,
+			tracer,
 			MakeShareNoteEndpoint),
 
 		PrivateNoteEndpoint:    MakeEndpoint(
@@ -101,8 +96,7 @@ func New(svc shareservice.Service, logger log.Logger, duration map[string]metric
 			apis[shareservice.PrivateNoteServiceName],
 			logger,
 			duration[shareservice.PrivateNoteServiceName],
-			otTracer,
-			zipkinTracer,
+			tracer,
 			MakePrivateNoteEndpoint),
 
 		GetNoteEndpoint:    MakeEndpoint(
@@ -110,28 +104,26 @@ func New(svc shareservice.Service, logger log.Logger, duration map[string]metric
 			apis[shareservice.GetNoteServiceName],
 			logger,
 			duration[shareservice.GetNoteServiceName],
-			otTracer,
-			zipkinTracer,
+			tracer,
 			MakeGetNoteEndpoint),
 	}
 
 	return
 }
 
-func MakeEndpoint(svc shareservice.Service, api bootapi.API, logger log.Logger, duration metrics.Histogram, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer,  makeFN MakeEndpointFunc) endpoint.Endpoint {
+func MakeEndpoint(svc shareservice.Service, api bootapi.API, logger log.Logger, duration metrics.Histogram, tracer stdopentracing.Tracer, makeFN MakeEndpointFunc) endpoint.Endpoint {
 	var ep endpoint.Endpoint
 	{
 		ep = makeFN(svc)
 		// RegisterByEmail is limited to 1000 requests per second with burst of 1 request.
 		// Note, rate is defined as a time interval between requests.
-		ep = ratelimit.NewErroringLimiter(rate.NewLimiter(rate.Every(api.RateLimit.Duration), int(api.RateLimit.Delta)))(ep)
+		ep = ratelimit.NewErroringLimiter(rate.NewLimiter(rate.Every(api.RateLimit.Duration), api.RateLimit.Delta))(ep)
+
 		ep = circuitbreaker.Gobreaker(gobreaker.NewCircuitBreaker(api.Breaker.Standardize()))(ep)
-		ep = opentracing.TraceServer(otTracer, api.Name)(ep)
-		if zipkinTracer != nil {
-			ep = zipkin.TraceEndpoint(zipkinTracer, api.Name)(ep)
-		}
+
 		ep = LoggingMiddleware(log.With(logger, api.GetGoKitLoggerKVs()))(ep)
 		ep = InstrumentingMiddleware(duration.With(api.Instrument...))(ep)
+
 	}
 	return ep
 }
@@ -141,11 +133,16 @@ func MakeShareNoteEndpoint(svc shareservice.Service) endpoint.Endpoint {
 		var (
 			req requests.ShareNoteRequest
 			url, noteid string
+			span stdopentracing.Span
 		)
+
+		span = stdopentracing.SpanFromContext(ctx)
+		defer span.Finish()
 
 		req = request.(requests.ShareNoteRequest)
 		url, noteid, err = svc.ShareNote(ctx, req.Name, req.Content)
 		if err != nil {
+
 			return responses.ShareNoteResponse{
 				Error: err.Error(),
 			}, nil
@@ -164,7 +161,11 @@ func MakeGetNoteEndpoint(svc shareservice.Service) endpoint.Endpoint {
 		var (
 			req requests.GetNoteRequest
 			name, content string
+			span stdopentracing.Span
 		)
+
+		span = stdopentracing.SpanFromContext(ctx)
+		defer span.Finish()
 
 		req = request.(requests.GetNoteRequest)
 		name, content, err = svc.GetNote(ctx, req.NoteID)

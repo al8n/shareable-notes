@@ -1,0 +1,31 @@
+consul-addr: "127.0.0.1:8500"
+share-svc:
+  name: "Share-Service-GRPC"
+  apis:
+    ShareNote:
+      path: "/v1"
+      method: "POST"
+      ratelimit:
+        delta: 1000
+        duration: 1s
+      breaker:
+        name: "ShareNote"
+        timeout: 30s
+    PrivateNote:
+      path: "/v1/private"
+      method: "POST"
+      ratelimit:
+        delta: 1000
+        duration: 1s
+      breaker:
+        name: "PrivateNote"
+        timeout: 30s
+    GetNote:
+      path: "/v1/note/{id}"
+      method: "GET"
+      ratelimit:
+        delta: 1000
+        duration: 1s
+      breaker:
+        name: "GetNote"
+        timeout: 30s
