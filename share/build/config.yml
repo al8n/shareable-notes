@@ -1,9 +1,11 @@
 address: "http://localhost:8080"
-host: "margin-share-service"
+host: margin-share-service
 service:
+  name: "Share"
   apis:
     ShareNote:
-      path: "/v1"
+      name: "ShareNote"
+      path: "/"
       method: "POST"
       ratelimit:
         delta: 1000
@@ -12,7 +14,8 @@ service:
         name: "ShareNote"
         timeout: 30s
     PrivateNote:
-      path: "/v1/private"
+      name: "PrivateNote"
+      path: "/private"
       method: "POST"
       ratelimit:
         delta: 1000
@@ -21,7 +24,8 @@ service:
         name: "PrivateNote"
         timeout: 30s
     GetNote:
-      path: "/v1/note/{id}"
+      name: "GetNote"
+      path: "/note/{id}"
       method: "GET"
       ratelimit:
         delta: 1000
@@ -29,18 +33,7 @@ service:
       breaker:
         name: "GetNote"
         timeout: 30s
-consul:
-  agent:
-    ip: "margin-consul"
-  client:
-    address: "margin-consul:8500"
-    scheme: "http"
-http:
-  name: "Share-Service-HTTP"
-  read-timeout: 15s
-  write-timeout: 15s
-grpc:
-  name: "Share-Service-GRPC"
+
 mongo:
   auth:
     username: margin
@@ -49,6 +42,22 @@ mongo:
   database: margin
   collection: notes
   connect-timeout: 30s
+consul:
+  agent-service-registration:
+    address: "margin-share-service"
+    port: 50051
+  client:
+    address: "margin-consul:8500"
+    scheme: "http"
+http:
+  runnable: false
+  name: "Share-Service-HTTP"
+  port: "8081"
+  read-timeout: 15s
+  write-timeout: 15s
+grpc:
+  name: "Share-Service-GRPC"
+  port: "50051"
 
 prometheus:
   path: "/metrics"

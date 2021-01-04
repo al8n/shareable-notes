@@ -137,12 +137,13 @@ func MakeShareNoteEndpoint(svc shareservice.Service) endpoint.Endpoint {
 		)
 
 		span = stdopentracing.SpanFromContext(ctx)
+		span.SetTag("Endpoint", shareservice.ShareNoteServiceName)
 		defer span.Finish()
 
 		req = request.(requests.ShareNoteRequest)
 		url, noteid, err = svc.ShareNote(ctx, req.Name, req.Content)
-		if err != nil {
 
+		if err != nil {
 			return responses.ShareNoteResponse{
 				Error: err.Error(),
 			}, nil
@@ -165,6 +166,7 @@ func MakeGetNoteEndpoint(svc shareservice.Service) endpoint.Endpoint {
 		)
 
 		span = stdopentracing.SpanFromContext(ctx)
+		span.SetTag("Endpoint", shareservice.GetNoteServiceName)
 		defer span.Finish()
 
 		req = request.(requests.GetNoteRequest)
@@ -187,7 +189,12 @@ func MakePrivateNoteEndpoint(svc shareservice.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		var (
 			req requests.PrivateNoteRequest
+			span stdopentracing.Span
 		)
+
+		span = stdopentracing.SpanFromContext(ctx)
+		span.SetTag("Endpoint", shareservice.PrivateNoteServiceName)
+		defer span.Finish()
 
 		req = request.(requests.PrivateNoteRequest)
 		err = svc.PrivateNote(ctx, req.NoteID)

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/ALiuGuanyan/margin/share/common"
+	bootconsul "github.com/ALiuGuanyan/micro-boot/consul"
 	bootflag "github.com/ALiuGuanyan/micro-boot/flag"
 	bootgrpc "github.com/ALiuGuanyan/micro-boot/grpc"
 	boothttp "github.com/ALiuGuanyan/micro-boot/http"
@@ -22,7 +23,6 @@ var (
 )
 
 type Config struct {
-	Name string `json:"name" yaml:"name"`
 
 	Address string `json:"address" yaml:"address"`
 	Host string `json:"host" yaml:"host"`
@@ -45,7 +45,7 @@ type Config struct {
 	// Prometheus
 	Prom  bootprom.Config          `json:"prometheus" yaml:"prometheus"`
 
-	Consul Consul      `json:"consul" yaml:"consul"`
+	Consul bootconsul.Config      `json:"consul" yaml:"consul"`
 }
 
 func GetConfig() *Config {

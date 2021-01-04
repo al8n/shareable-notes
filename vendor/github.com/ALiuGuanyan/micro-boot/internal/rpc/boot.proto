@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package rpc;
+
+service Boot {
+    rpc Stop(stream StopRequest) returns (stream StopResponse) {};
+}
+
+message StopRequest {
+    bool force = 1;
+}
+
+message StopResponse {
+    string msg = 1;
+    int32 errno = 2;
+}

@@ -6,7 +6,6 @@ import (
 	"github.com/ALiuGuanyan/margin/share/common"
 
 	boothttp "github.com/ALiuGuanyan/micro-boot/http"
-	bootzipkin "github.com/ALiuGuanyan/micro-boot/zipkin"
 	"github.com/imdario/mergo"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
@@ -32,8 +31,6 @@ func GetConfig() *Config {
 type Config struct {
 	HTTP boothttp.HTTP `json:"http" yaml:"http"`
 	HTTPS boothttp.HTTPS `json:"https" yaml:"https"`
-
-	Zipkin bootzipkin.Config `json:"zipkin" yaml:"zipkin"`
 
 	ShareSVC ShareService `json:"share-svc" yaml:"share-svc"`
 
@@ -91,7 +88,6 @@ func (c *Config) Initialize(name string) (err error) {
 func (c *Config) BindFlags(fs *bootflag.FlagSet)  {
 	c.HTTP.BindFlags(fs)
 	c.HTTPS.BindFlags(fs)
-	c.Zipkin.BindFlags(fs)
 
 	fs.StringVar(&c.ConsulAddr, "consul-addr", "", "Consul agent address")
 	fs.IntVar(&c.RetryMax, "retry-max", 3, "per-request retries to different instances")

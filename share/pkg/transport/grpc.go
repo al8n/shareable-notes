@@ -51,7 +51,7 @@ func (g GRPCServer) GetNote(ctx context.Context, request *pb.GetNoteRequest) (*p
 	return resp.(*pb.GetNoteResponse), nil
 }
 
-func NewGRPCServer(set serviceendpoint.Set, otTracer stdopentracing.Tracer, logger log.Logger) pb.ShareServer  {
+func NewGRPCServer(set serviceendpoint.Set, otTracer stdopentracing.Tracer, logger log.Logger, apis bootapi.APIs) pb.ShareServer  {
 	options := []grpctransport.ServerOption{
 		grpctransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 	}

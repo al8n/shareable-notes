@@ -1,0 +1,203 @@
+Attaching to margin-jaeger, margin-exporter, margin-cadvisor, margin-mongo, margin-grafana, margin-consul, margin-prometheus, margin-share-service, margin-gateway
+[36mmargin-cadvisor       |[0m W0104 01:54:13.443396       1 manager.go:256] Could not configure a source for OOM detection, disabling OOM events: open /dev/kmsg: no such file or directory
+[33mmargin-consul         |[0m ==> Starting Consul agent...
+[33mmargin-consul         |[0m            Version: '1.9.1'
+[33mmargin-consul         |[0m            Node ID: '82cc7a1b-58b6-2321-3fe4-8d3a29ace830'
+[33mmargin-consul         |[0m          Node name: 'b25b05624d16'
+[33mmargin-consul         |[0m         Datacenter: 'dc1' (Segment: '<all>')
+[33mmargin-consul         |[0m             Server: true (Bootstrap: true)
+[33mmargin-consul         |[0m        Client Addr: [0.0.0.0] (HTTP: 8500, HTTPS: -1, gRPC: -1, DNS: 8600)
+[33mmargin-consul         |[0m       Cluster Addr: 172.19.0.7 (LAN: 8301, WAN: 8302)
+[33mmargin-consul         |[0m            Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false
+[33mmargin-consul         |[0m 
+[33mmargin-consul         |[0m ==> Log data will now stream in as it occurs:
+[33mmargin-consul         |[0m 
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.861Z [WARN]  agent: bootstrap = true: do not enable unless necessary
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.204Z caller=node_exporter.go:177 msg="Starting node_exporter" version="(version=1.0.1, branch=HEAD, revision=3715be6ae899f2a9b9dbfd9c39f3e09a7bd4559f)"
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.204Z caller=node_exporter.go:178 msg="Build context" build_context="(go=go1.14.4, user=root@1f76dbbcfa55, date=20200616-12:44:12)"
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.911Z [WARN]  agent.auto_config: bootstrap = true: do not enable unless necessary
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Starting Grafana" logger=server version=7.3.5 commit=11f305f88a branch=HEAD compiled=2020-12-09T16:02:57+0000
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config loaded from" logger=settings file=/usr/share/grafana/conf/defaults.ini
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config loaded from" logger=settings file=/etc/grafana/grafana.ini
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.data=/var/lib/grafana"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.logs=/var/log/grafana"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.plugins=/var/lib/grafana/plugins"
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.919Z [INFO]  agent.server.raft: initial configuration: index=40 servers="[{Suffrage:Voter ID:82cc7a1b-58b6-2321-3fe4-8d3a29ace830 Address:172.19.0.2:8300}]"
+[36;1mmargin-jaeger         |[0m 2021/01/04 01:54:13 maxprocs: Leaving GOMAXPROCS=8: CPU quota undefined
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:105 msg="Enabled collectors"
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=arp
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=bcache
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=bonding
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=btrfs
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=conntrack
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=cpu
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=cpufreq
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.paths.provisioning=/etc/grafana/provisioning"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from command line" logger=settings arg="default.log.mode=console"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_PATHS_DATA=/var/lib/grafana"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_PATHS_LOGS=/var/log/grafana"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_PATHS_PLUGINS=/var/lib/grafana/plugins"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_PATHS_PROVISIONING=/etc/grafana/provisioning"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_SECURITY_ADMIN_PASSWORD=*********"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Config overridden from Environment variable" logger=settings var="GF_USERS_ALLOW_SIGN_UP=false"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Path Home" logger=settings path=/usr/share/grafana
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.206Z caller=node_exporter.go:112 collector=diskstats
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=edac
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=entropy
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=filefd
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=filesystem
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=hwmon
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=infiniband
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.919Z [INFO]  agent.server.raft: entering follower state: follower="Node at 172.19.0.7:8300 [Follower]" leader=
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1425226,"caller":"flags/service.go:117","msg":"Mounting metrics handler on admin server","route":"/metrics"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1425645,"caller":"flags/service.go:123","msg":"Mounting expvar handler on admin server","route":"/debug/vars"}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.776+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"main","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.224Z caller=main.go:322 msg="No time or size retention was set so using the default time retention" duration=15d
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.224Z caller=main.go:360 msg="Starting Prometheus" version="(version=2.23.0, branch=HEAD, revision=26d89b4b0776fe4cd5a3656dfa520f119a375273)"
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.224Z caller=main.go:365 build_context="(go=go1.15.5, user=root@37609b3a0a21, date=20201126-10:56:17)"
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.224Z caller=main.go:366 host_details="(Linux 4.19.121-linuxkit #1 SMP Tue Dec 1 17:50:32 UTC 2020 x86_64 f119c511b3ae (none))"
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.225Z caller=main.go:367 fd_limits="(soft=1048576, hard=1048576)"
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.225Z caller=main.go:368 vm_limits="(soft=unlimited, hard=unlimited)"
+[35;1mmargin-share-service  |[0m map[]
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Path Data" logger=settings path=/var/lib/grafana
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=ipvs
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=loadavg
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.805+00:00"},"s":"W",  "c":"ASIO",     "id":22601,   "ctx":"main","msg":"No TransportLayer configured during NetworkInterface startup"}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.805+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.920Z [INFO]  agent.server.serf.wan: serf: EventMemberJoin: b25b05624d16.dc1 172.19.0.7
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1426961,"caller":"flags/admin.go:121","msg":"Mounting health check on admin server","route":"/"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1427531,"caller":"flags/admin.go:127","msg":"Starting admin HTTP server","http-addr":":14269"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.142776,"caller":"flags/admin.go:113","msg":"Admin server started","http.host-port":"[::]:14269","health-status":"unavailable"}
+[35;1mmargin-share-service  |[0m time="2021-01-04 01:54:14" level=info msg="starting share service daemon..."
+[35;1mmargin-share-service  |[0m time="2021-01-04 01:54:14" level=info msg="log: /var/log/share.log"
+[35;1mmargin-share-service  |[0m time="2021-01-04 01:54:14" level=info msg="config: /app/config.yml"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Path Logs" logger=settings path=/var/log/grafana
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Path Plugins" logger=settings path=/var/lib/grafana/plugins
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=mdadm
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=meminfo
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=netclass
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=netdev
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=netstat
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=nfs
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.228Z caller=main.go:722 msg="Starting TSDB ..."
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.228Z caller=web.go:528 component=web msg="Start listening for connections" address=0.0.0.0:9090
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.921Z [WARN]  agent.server.serf.wan: serf: Failed to re-join any previously known node
+[35;1mmargin-share-service  |[0m 2021/01/04 01:54:14 listen unix /var/run/share.sock: bind: address already in use
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.807+00:00"},"s":"I",  "c":"STORAGE",  "id":4615611, "ctx":"initandlisten","msg":"MongoDB starting","attr":{"pid":1,"port":27017,"dbPath":"/data/db","architecture":"64-bit","host":"e0418188d94e"}}
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Path Provisioning" logger=settings path=/etc/grafana/provisioning
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.922Z [INFO]  agent.server.serf.lan: serf: EventMemberJoin: b25b05624d16 172.19.0.7
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.145801,"caller":"memory/factory.go:61","msg":"Memory storage initialized","configuration":{"MaxTraces":0}}
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=nfsd
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=powersupplyclass
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=pressure
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=rapl
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=schedstat
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.238Z caller=head.go:645 component=tsdb msg="Replaying on-disk memory mappable chunks if any"
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.238Z caller=head.go:659 component=tsdb msg="On-disk memory mappable chunks replay completed" duration=7.8µs
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.238Z caller=head.go:665 component=tsdb msg="Replaying WAL, this may take a while"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="App mode production" logger=settings
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=sockstat
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=softnet
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=stat
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=textfile
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=thermal_zone
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=time
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=timex
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=udp_queues
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1592944,"caller":"server/grpc.go:76","msg":"Starting jaeger-collector gRPC server","grpc.host-port":":14250"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1593568,"caller":"server/http.go:45","msg":"Starting jaeger-collector HTTP server","http host-port":":14268"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1594846,"caller":"server/zipkin.go:48","msg":"Not listening for Zipkin HTTP traffic, port not configured"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1595154,"caller":"grpc/builder.go:67","msg":"Agent requested insecure grpc connection to collector(s)"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1595526,"caller":"grpc@v1.29.1/clientconn.go:243","msg":"parsed scheme: \"\"","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1596377,"caller":"grpc@v1.29.1/clientconn.go:249","msg":"scheme \"\" not registered, fallback to default scheme","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.159681,"caller":"grpc@v1.29.1/resolver_conn_wrapper.go:143","msg":"ccResolverWrapper: sending update to cc: {[{:14250  <nil> 0 <nil>}] <nil> <nil>}","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1597018,"caller":"grpc@v1.29.1/clientconn.go:667","msg":"ClientConn switching balancer to \"round_robin\"","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1597512,"caller":"grpc@v1.29.1/clientconn.go:682","msg":"Channel switches to new LB policy \"round_robin\"","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1598084,"caller":"grpc@v1.29.1/clientconn.go:1056","msg":"Subchannel Connectivity change to CONNECTING","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1598623,"caller":"grpc@v1.29.1/clientconn.go:417","msg":"Channel Connectivity change to CONNECTING","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.159911,"caller":"grpc/builder.go:101","msg":"Checking connection to collector"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1599188,"caller":"grpc@v1.29.1/clientconn.go:1193","msg":"Subchannel picks a new address \":14250\" to connect","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1599436,"caller":"grpc/builder.go:104","msg":"Agent collector connection state change","dialTarget":":14250","status":"CONNECTING"}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.807+00:00"},"s":"I",  "c":"CONTROL",  "id":23403,   "ctx":"initandlisten","msg":"Build Info","attr":{"buildInfo":{"version":"4.4.2","gitVersion":"15e73dc5738d2278b688f8929aee605fe4279b0e","openSSLVersion":"OpenSSL 1.1.1  11 Sep 2018","modules":[],"allocator":"tcmalloc","environment":{"distmod":"ubuntu1804","distarch":"x86_64","target_arch":"x86_64"}}}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.808+00:00"},"s":"I",  "c":"CONTROL",  "id":51765,   "ctx":"initandlisten","msg":"Operating System","attr":{"os":{"name":"Ubuntu","version":"18.04"}}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.808+00:00"},"s":"I",  "c":"CONTROL",  "id":21951,   "ctx":"initandlisten","msg":"Options set by command line","attr":{"options":{"net":{"bindIp":"*"},"security":{"authorization":"enabled"}}}}
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.923Z [INFO]  agent.router: Initializing LAN area manager
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.294Z caller=head.go:717 component=tsdb msg="WAL segment loaded" segment=0 maxSegment=2
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=uname
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=vmstat
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=xfs
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:112 collector=zfs
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1623964,"caller":"grpc@v1.29.1/clientconn.go:1056","msg":"Subchannel Connectivity change to READY","system":"grpc","grpc_log":true}
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.307Z caller=head.go:717 component=tsdb msg="WAL segment loaded" segment=1 maxSegment=2
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.813+00:00"},"s":"I",  "c":"STORAGE",  "id":22270,   "ctx":"initandlisten","msg":"Storage engine to use detected by data files","attr":{"dbpath":"/data/db","storageEngine":"wiredTiger"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.813+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Connecting to DB" logger=sqlstore dbtype=sqlite3
+[35mmargin-gateway        |[0m /app/entry-point.sh: 2: /app/entry-point.sh: /app/gateway: Exec format error
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.923Z [WARN]  agent.server.serf.lan: serf: Failed to re-join any previously known node
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.307Z caller=head.go:717 component=tsdb msg="WAL segment loaded" segment=2 maxSegment=2
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.308Z caller=head.go:722 component=tsdb msg="WAL replay completed" checkpoint_replay_duration=61.7µs wal_replay_duration=69.167ms total_replay_duration=69.3315ms
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1628778,"caller":"base/balancer.go:200","msg":"roundrobinPicker: newPicker called with info: {map[0xc0003a6740:{{:14250  <nil> 0 <nil>}}]}","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1631646,"caller":"grpc@v1.29.1/clientconn.go:417","msg":"Channel Connectivity change to READY","system":"grpc","grpc_log":true}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1632342,"caller":"grpc/builder.go:104","msg":"Agent collector connection state change","dialTarget":":14250","status":"READY"}
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=node_exporter.go:191 msg="Listening on" address=:9100
+[32mmargin-exporter       |[0m level=info ts=2021-01-04T01:54:13.207Z caller=tls_config.go:170 msg="TLS is disabled and it cannot be enabled on the fly." http2=false
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Starting DB migrations" logger=migrator
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:13.813+00:00"},"s":"I",  "c":"STORAGE",  "id":22315,   "ctx":"initandlisten","msg":"Opening WiredTiger","attr":{"config":"create,cache_size=482M,session_max=33000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000,close_scan_interval=10,close_handle_minimum=250),statistics_log=(wait=0),verbose=[recovery_progress,checkpoint_progress,compact_progress],"}}
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.924Z [INFO]  agent.server: Adding LAN server: server="b25b05624d16 (Addr: tcp/172.19.0.7:8300) (DC: dc1)"
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.312Z caller=main.go:742 fs_type=EXT4_SUPER_MAGIC
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.312Z caller=main.go:745 msg="TSDB started"
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Starting plugin search" logger=plugins
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.924Z [INFO]  agent.server: Handled event for server in area: event=member-join server=b25b05624d16.dc1 area=wan
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.381+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:377621][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY_PROGRESS] Recovering log 2 through 3"}}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1656327,"caller":"command-line-arguments/main.go:218","msg":"Starting agent"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1657617,"caller":"querysvc/query_service.go:137","msg":"Archive storage not created","reason":"archive storage not supported"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.165791,"caller":"app/flags.go:143","msg":"Archive storage not initialized"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1658027,"caller":"app/agent.go:69","msg":"Starting jaeger-agent HTTP server","http-port":5778}
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.312Z caller=main.go:871 msg="Loading configuration file" filename=/etc/prometheus/prometheus.yml
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.473+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:467911][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY_PROGRESS] Recovering log 3 through 3"}}
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.929Z [INFO]  agent: Started DNS server: address=0.0.0.0:8600 network=tcp
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:13+0000 lvl=info msg="Registering plugin" logger=plugins id=input
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1663916,"caller":"app/server.go:163","msg":"Query server started","port":16686,"addr":":16686"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1664689,"caller":"healthcheck/handler.go:128","msg":"Health Check state change","status":"ready"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.166498,"caller":"app/server.go:232","msg":"Starting CMUX server","port":16686,"addr":":16686"}
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.166535,"caller":"app/server.go:221","msg":"Starting GRPC server","port":16686,"addr":":16686"}
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.317Z caller=main.go:902 msg="Completed loading of configuration file" filename=/etc/prometheus/prometheus.yml totalDuration=5.1091ms remote_storage=3.7µs web_handler=4.3µs query_engine=5.6µs scrape=941.6µs scrape_sd=97.4µs notify=5µs notify_sd=7.1µs rules=5.9µs
+[32;1mmargin-prometheus     |[0m level=info ts=2021-01-04T01:54:14.317Z caller=main.go:694 msg="Server is ready to receive web requests."
+[36;1mmargin-jaeger         |[0m {"level":"info","ts":1609725253.1665688,"caller":"app/server.go:208","msg":"Starting HTTP server","port":16686,"addr":":16686"}
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.930Z [INFO]  agent: Started DNS server: address=0.0.0.0:8600 network=udp
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.562+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:562190][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY | WT_VERB_RECOVERY_PROGRESS] Main recovery loop: starting at 2/8192 to 3/256"}}
+[34mmargin-grafana        |[0m t=2021-01-04T01:54:14+0000 lvl=info msg="HTTP Server Listen" logger=http.server address=[::]:3000 protocol=http subUrl= socket=
+[35;1mmargin-share-service exited with code 1
+[0m[33mmargin-consul         |[0m     2021-01-04T01:54:13.932Z [INFO]  agent: Starting server: address=[::]:8500 network=tcp protocol=http
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.932Z [WARN]  agent: DEPRECATED Backwards compatibility with pre-1.9 metrics enabled. These metrics will be removed in a future version of Consul. Set `telemetry { disable_compat_1.9 = true }` to disable them.
+[33mmargin-consul         |[0m     2021-01-04T01:54:13.933Z [INFO]  agent: started state syncer
+[33mmargin-consul         |[0m ==> Consul agent running!
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.658+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:658909][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY_PROGRESS] Recovering log 2 through 3"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.741+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:741563][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY_PROGRESS] Recovering log 3 through 3"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.782+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:782579][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY | WT_VERB_RECOVERY_PROGRESS] Set global recovery timestamp: (0, 0)"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.782+00:00"},"s":"I",  "c":"STORAGE",  "id":22430,   "ctx":"initandlisten","msg":"WiredTiger message","attr":{"message":"[1609725254:782630][1:0x7fe660827ac0], txn-recover: [WT_VERB_RECOVERY | WT_VERB_RECOVERY_PROGRESS] Set global oldest timestamp: (0, 0)"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.862+00:00"},"s":"I",  "c":"STORAGE",  "id":4795906, "ctx":"initandlisten","msg":"WiredTiger opened","attr":{"durationMillis":1049}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.865+00:00"},"s":"I",  "c":"RECOVERY", "id":23987,   "ctx":"initandlisten","msg":"WiredTiger recoveryTimestamp","attr":{"recoveryTimestamp":{"$timestamp":{"t":0,"i":0}}}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.892+00:00"},"s":"I",  "c":"STORAGE",  "id":4366408, "ctx":"initandlisten","msg":"No table logging settings modifications are required for existing WiredTiger tables","attr":{"loggingEnabled":true}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.901+00:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+[35mmargin-gateway exited with code 2
+[0m[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.932+00:00"},"s":"I",  "c":"STORAGE",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.950+00:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/data/db/diagnostic.data"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.953+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.953+00:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"0.0.0.0"}}
+[33;1mmargin-mongo          |[0m {"t":{"$date":"2021-01-04T01:54:14.953+00:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.169Z [ERROR] agent.anti_entropy: failed to sync remote state: error="No cluster leader"
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.568Z [WARN]  agent.server.raft: heartbeat timeout reached, starting election: last-leader=
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.569Z [INFO]  agent.server.raft: entering candidate state: node="Node at 172.19.0.7:8300 [Candidate]" term=4
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.580Z [INFO]  agent.server.raft: election won: tally=1
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.580Z [INFO]  agent.server.raft: entering leader state: leader="Node at 172.19.0.7:8300 [Leader]"
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.581Z [INFO]  agent.server: cluster leadership acquired
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.586Z [INFO]  agent.server: New leader elected: payload=b25b05624d16
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.617Z [ERROR] agent.server.autopilot: Error when computing next state: error="cannot detect the current leader server id from its address: 172.19.0.7:8300"
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.618Z [INFO]  agent.leader: started routine: routine="federation state anti-entropy"
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.619Z [INFO]  agent.leader: started routine: routine="federation state pruning"
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.619Z [INFO]  agent.server.raft: updating configuration: command=AddStaging server-id=82cc7a1b-58b6-2321-3fe4-8d3a29ace830 server-addr=172.19.0.7:8300 servers="[{Suffrage:Voter ID:82cc7a1b-58b6-2321-3fe4-8d3a29ace830 Address:172.19.0.7:8300}]"
+[33mmargin-consul         |[0m     2021-01-04T01:54:21.622Z [INFO]  agent.server: member joined, marking health alive: member=b25b05624d16
+[33mmargin-consul         |[0m     2021-01-04T01:54:23.171Z [INFO]  agent: Synced node info
+[33mmargin-consul         |[0m     2021-01-04T01:54:40.030Z [ERROR] agent: Failed to check for updates: error="Get "https://checkpoint-api.hashicorp.com/v1/check/consul?arch=amd64&os=linux&signature=a84f82b8-941f-2d86-6c05-1dd4de5d1878&version=1.9.1": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"
+Gracefully stopping... (press Ctrl+C again to force)

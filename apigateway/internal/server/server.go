@@ -57,18 +57,29 @@ func (s *Server) Serve() (err error) {
 	}
 
 	// Transport domain.
-	var tracer stdopentracing.Tracer // no-op
+	var (
+		tracer stdopentracing.Tracer // no-op
+		jaegerCfg *jaegerconfig.Configuration
+	)
 	{
-		jaegerCfg := &jaegerconfig.Configuration{
-			ServiceName: "API Gateway",
-			Sampler: &jaegerconfig.SamplerConfig{
-				Type: "const",
-				Param: 1,
-			},
-			Reporter: &jaegerconfig.ReporterConfig{
-				LogSpans: true,
-			},
+		jaegerCfg, err = jaegerconfig.FromEnv()
+		if err != nil {
+			return err
 		}
+
+		jaegerCfg.Reporter.LogSpans = true
+
+		//jaegerCfg.Reporter = &jaegerconfig.ReporterConfig{
+		//	LocalAgentHostPort: "margin-jaeger:6831",
+		//	LogSpans: true,
+		//}
+
+		jaegerCfg.Sampler = &jaegerconfig.SamplerConfig{
+			Type: "const",
+			Param: 1,
+		}
+
+		jaegerCfg.ServiceName = "API Gateway"
 
 		tracer, s.tracerCloser, err = jaegerCfg.NewTracer(jaegerconfig.Logger(jaeger.StdLogger))
 		if err != nil {
@@ -140,6 +151,7 @@ func (s *Server) Close() (err error) {
 
 func sharesvcFactory(makeEndpoint func(service shareservice.Service) endpoint.Endpoint, tracer stdopentracing.Tracer, logger log.Logger) sd.Factory {
 	return func(instance string) (endpoint.Endpoint, io.Closer, error) {
+
 		conn, err := grpc.Dial(instance, grpc.WithInsecure())
 		if err != nil {
 			return nil, nil, err

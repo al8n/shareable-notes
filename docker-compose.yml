@@ -1,50 +1,59 @@
 version: "3"
 services:
-  mongo:
-    image: mongo
-    container_name: "margin-mongo"
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: "margin-jaeger"
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
     networks:
       - margin
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: margin
-#      MONGO_INITDB_ROOT_PASSWORD: secret
+
+  share-microservice:
+    build:
+      context: ./share/build
+      dockerfile: Dockerfile
+    container_name: "margin-share-service"
+    command: [
+      "--http-runnable=false"
+    ]
+    environment:
+      JAEGER_AGENT_HOST: margin-jaeger
+      JAEGER_AGENT_PORT: 6831
     volumes:
-      - margin-mongo:/data/db
+      - /Users/liuguanyan/Developer/margin/share/build/config.yml:/app/config.yml
     ports:
-      - "27017:27017"
+      - "50051:50051"
+    networks:
+      - margin
+    depends_on:
+      - consul
+      - jaeger
 
-#  share-microservice:
-#    build:
-#      context: ./share/build
-#      dockerfile: Dockerfile
-#    container_name: "margin-share-service"
-#    volumes:
-#      - /Users/Al/Development/margin/share/build/config.yml:/app/config.yml
-#    ports:
-#      - "8081:8080"
-#      - "50052:50051"
-#    networks:
-#      - margin
-#    depends_on:
-#      - mongo
-#      - tracer
-#      - consul
-
-#  gateway:
-#    build:
-#      context: ./apigateway/build
-#      dockerfile: Dockerfile
-#    container_name: "margin-gateway"
-#    volumes:
-#      - /Users/Al/Development/margin/apigateway/build/config.yml:/app/config.yml
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - margin
-#    depends_on:
-#      - share-microservice
-#      - tracer
-#      - consul
+  gateway:
+    build:
+      context: ./apigateway/build
+      dockerfile: Dockerfile
+    container_name: "margin-gateway"
+    environment:
+      - JAEGER_AGENT_HOST=margin-jaeger
+      - JAEGER_AGENT_PORT=6831
+    volumes:
+      - /Users/liuguanyan/Developer/margin/apigateway/build/config.yml:/app/config.yml
+    ports:
+      - "8080:8080"
+    networks:
+      - margin
+    depends_on:
+      - share-microservice
+      - consul
+      - jaeger
 
   consul:
     image: consul
@@ -77,7 +86,7 @@ services:
     networks:
       - margin
     volumes:
-      - /Users/Al/Development/margin/conf/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /Users/liuguanyan/Developer/margin/conf/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
       - cadvisor
       - grafana
@@ -103,8 +112,4 @@ services:
 
 networks:
   margin:
-    external: false
-
-volumes:
-  margin-mongo:
-    external: false
+    external: true

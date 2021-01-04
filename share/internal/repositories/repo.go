@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 	"encoding/base64"
+	"errors"
 	"github.com/ALiuGuanyan/margin/share/config"
 	"github.com/ALiuGuanyan/margin/share/internal/utils"
 	"github.com/ALiuGuanyan/margin/share/model"
@@ -152,6 +153,10 @@ func (repo Repo) GetNote(ctx context.Context, id string) (name, content string, 
 	if err != nil {
 		utils.SetTracerSpanError(span, err)
 		return "", "", err
+	}
+
+	if note.Deactivated {
+		return "", "", errors.New("note cannot be found")
 	}
 
 	name = note.Name

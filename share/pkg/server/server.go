@@ -3,10 +3,11 @@ package server
 import (
 	"fmt"
 	"github.com/ALiuGuanyan/margin/share/config"
-	"github.com/ALiuGuanyan/margin/share/pb"
+	sharepb "github.com/ALiuGuanyan/margin/share/pb"
 	shareendpoint "github.com/ALiuGuanyan/margin/share/pkg/endpoint"
 	shareservice "github.com/ALiuGuanyan/margin/share/pkg/service"
 	sharetransport "github.com/ALiuGuanyan/margin/share/pkg/transport"
+	bootapi "github.com/ALiuGuanyan/micro-boot/api"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/kit/metrics/prometheus"
@@ -47,7 +48,7 @@ type Server struct {
 	httpsConsulRegister *consulsd.Registrar
 	router *mux.Router
 
-	shareServer  pb.ShareServer
+	shareServer  sharepb.ShareServer
 	grpcServer  *grpc.Server
 	grpcListener net.Listener
 	grpcConsulRegister *consulsd.Registrar
@@ -70,18 +71,25 @@ func (s *Server) Serve() (err error) {
 	}
 
 
-	var tracer stdopentracing.Tracer
+	var (
+		tracer stdopentracing.Tracer
+		jaegerCfg *jaegerconfig.Configuration
+	)
 	{
-		jaegerCfg := &jaegerconfig.Configuration{
-			ServiceName: cfg.Name,
-			Sampler: &jaegerconfig.SamplerConfig{
-				Type: "const",
-				Param: 1,
-			},
-			Reporter: &jaegerconfig.ReporterConfig{
-				LogSpans: true,
-			},
+		jaegerCfg, err = jaegerconfig.FromEnv()
+		if err != nil {
+			return err
 		}
+
+		jaegerCfg.Reporter.LogSpans = true
+
+		jaegerCfg.Sampler = &jaegerconfig.SamplerConfig{
+			Type: "const",
+			Param: 1,
+		}
+
+		jaegerCfg.ServiceName = cfg.Service.Name
+
 
 		tracer, s.tracerCloser, err = jaegerCfg.NewTracer(jaegerconfig.Logger(jaeger.StdLogger))
 		if err != nil {
@@ -142,76 +150,31 @@ func (s *Server) Serve() (err error) {
 		if cfg.HTTP.Runnable || cfg.HTTPS.Runnable {
 			s.router = sharetransport.NewHTTPHandler(*endpoints, tracer, logger, cfg.Service.APIs)
 			s.router.Handle(cfg.Prom.Path, promhttp.Handler())
+		} else {
+			r := mux.NewRouter()
+			r.Handle(cfg.Prom.Path, promhttp.Handler())
+			http.ListenAndServe(":9090", r)
 		}
 
 		if cfg.HTTP.Runnable {
-			s.httpListener, err = net.Listen("tcp", httpAddr)
-			if err != nil {
-				logger.Log("transport", "HTTP", "during", "Listen", "err", err)
-				return err
-			}
-
-			s.httpConsulRegister, err = NewConsulHTTPRegister(logger)
+			err = s.serveHTTP(httpAddr, logger)
 			if err != nil {
 				return err
 			}
-
-			go func() {
-				s.wg.Add(1)
-				logger.Log("transport", "HTTP", "addr", httpAddr)
-				s.httpConsulRegister.Register()
-				//ListenAndServe(s.router, s.httpListener, "share")
-				http.Serve(s.httpListener, s.router)
-				s.wg.Done()
-			}()
 		}
 
 		if cfg.HTTPS.Runnable {
-			s.httpsListener, err = net.Listen("tcp", httpsAddr)
-			if err != nil {
-				logger.Log("transport", "HTTP", "during", "Listen", "err", err)
-				return err
-			}
-
-			s.httpsConsulRegister, err = NewConsulHTTPSRegister(logger)
+			err = s.serveHTTPS(httpsAddr, logger, cfg.HTTPS.Cert, cfg.HTTPS.Key)
 			if err != nil {
 				return err
 			}
-
-			go func() {
-				s.wg.Add(1)
-				logger.Log("transport", "HTTPS", "addr", httpsAddr)
-				s.httpsConsulRegister.Register()
-				http.ServeTLS(s.httpsListener, s.router, cfg.HTTPS.Cert, cfg.HTTPS.Key)
-				s.wg.Done()
-			}()
 		}
 
 		if cfg.GRPC.Runnable {
-			s.grpcListener, err = net.Listen("tcp", grpcAddr)
-			if err != nil {
-				logger.Log("transport", "gRPC", "during", "Listen", "err", err)
-				return err
-			}
-
-			s.grpcServer = grpc.NewServer(grpc.UnaryInterceptor(kitgrpc.Interceptor))
-
-			s.shareServer = sharetransport.NewGRPCServer(*endpoints, tracer, logger)
-
-			pb.RegisterShareServer(s.grpcServer, s.shareServer)
-
-			s.grpcConsulRegister, err = NewConsulGRPCRegister(logger)
+			err = s.serveRPC(grpcAddr, *endpoints, logger, tracer, cfg.Service.APIs)
 			if err != nil {
 				return err
 			}
-
-			go func() {
-				s.wg.Add(1)
-				logger.Log("transport", "gRPC", "addr", grpcAddr)
-				s.grpcConsulRegister.Register()
-				s.grpcServer.Serve(s.grpcListener)
-				s.wg.Done()
-			}()
 		}
 	}
 
@@ -242,49 +205,118 @@ func (s *Server) Close() (err error) {
 	return nil
 }
 
+func (s *Server) serveRPC(address string,  endpoints shareendpoint.Set, logger log.Logger, tracer stdopentracing.Tracer, apis bootapi.APIs) (err error) {
+	s.grpcListener, err = net.Listen("tcp", address)
+	if err != nil {
+		logger.Log("transport", "gRPC", "during", "Listen", "err", err)
+		return err
+	}
+
+	s.grpcServer = grpc.NewServer(grpc.UnaryInterceptor(kitgrpc.Interceptor))
+
+	s.shareServer = sharetransport.NewGRPCServer(endpoints, tracer, logger, apis)
+
+	sharepb.RegisterShareServer(s.grpcServer, s.shareServer)
+
+	s.grpcConsulRegister, err = NewConsulGRPCRegister(logger)
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		s.wg.Add(1)
+		logger.Log("transport", "gRPC", "addr", address)
+		s.grpcConsulRegister.Register()
+		s.grpcServer.Serve(s.grpcListener)
+		s.wg.Done()
+	}()
+
+	return nil
+}
+
+func (s *Server) serveHTTP(address string, logger log.Logger) (err error)  {
+	s.httpListener, err = net.Listen("tcp", address)
+	if err != nil {
+		logger.Log("transport", "HTTP", "during", "Listen", "err", err)
+		return err
+	}
+
+	s.httpConsulRegister, err = NewConsulHTTPRegister(logger)
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		s.wg.Add(1)
+		logger.Log("transport", "HTTP", "addr", address)
+		s.httpConsulRegister.Register()
+		http.Serve(s.httpListener, s.router)
+		s.wg.Done()
+	}()
+
+	return nil
+}
+
+func (s *Server) serveHTTPS(address string, logger log.Logger, cert, key string) (err error)  {
+	s.httpsListener, err = net.Listen("tcp", address)
+	if err != nil {
+		logger.Log("transport", "HTTPS", "during", "Listen", "err", err)
+		return err
+	}
+
+	s.httpsConsulRegister, err = NewConsulHTTPSRegister(logger)
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		s.wg.Add(1)
+		logger.Log("transport", "HTTPS", "addr", address)
+		s.httpsConsulRegister.Deregister()
+		http.ServeTLS(s.httpsListener, s.router, cert, key)
+		s.wg.Done()
+	}()
+
+	return nil
+}
+
 func NewConsulGRPCRegister(logger log.Logger) (register *consulsd.Registrar, err error)  {
 	var (
-		cfg *config.Config
+		cfg = config.GetConfig()
 		consulClient *api.Client
 		client consulsd.Client
 		apiCfg *api.Config
 	)
 
-	cfg = config.GetConfig()
-
 	apiCfg = cfg.Consul.Client.Standardize()
-	apiCfg.Address = fmt.Sprintf("%s:%d", cfg.Consul.Agent.IP,cfg.Consul.Agent.Port)
 
 	consulClient, err = api.NewClient(apiCfg)
 
 	if err != nil {
 		return nil, err
 	}
-	
+
 	client = consulsd.NewClient(consulClient)
 
-	reg := &api.AgentServiceRegistration{
-		ID:                fmt.Sprintf("%v-%v-%v", cfg.Service.Name, cfg.Host, cfg.GRPC.Port),
-		Name:              cfg.GRPC.Name,
-		Port:              cfg.GRPC.GetIntPort(),
-		Address:           cfg.Host,
-	}
+
+	reg := cfg.Consul.Agent.Standardize()
+	reg.ID = fmt.Sprintf("%v-%v-%v", cfg.Service.Name, cfg.Host, cfg.GRPC.Port)
+	reg.Name = cfg.GRPC.Name
+	reg.Port = cfg.GRPC.GetIntPort()
 
 	return consulsd.NewRegistrar(client, reg, logger), nil
 }
 
 func NewConsulHTTPRegister(logger log.Logger) (register *consulsd.Registrar, err error)  {
 	var (
-		cfg *config.Config
+		cfg = config.GetConfig()
 		consulClient *api.Client
 		client consulsd.Client
 		apiCfg *api.Config
 	)
 
-	cfg = config.GetConfig()
-	apiCfg = cfg.Consul.Client.Standardize()
-	apiCfg.Address = fmt.Sprintf("%s:%d", cfg.Consul.Agent.IP,cfg.Consul.Agent.Port)
 
+	apiCfg = cfg.Consul.Client.Standardize()
 	consulClient, err = api.NewClient(apiCfg)
 	if err != nil {
 		return nil, err
@@ -292,28 +324,24 @@ func NewConsulHTTPRegister(logger log.Logger) (register *consulsd.Registrar, err
 
 	client = consulsd.NewClient(consulClient)
 
-	reg := &api.AgentServiceRegistration{
-		ID:                fmt.Sprintf("%v-%v-%v", cfg.Service.Name, cfg.Host, cfg.HTTP.Port),
-		Name:              cfg.HTTP.Name,
-		Port:              cfg.HTTP.GetIntPort(),
-		Address:           cfg.Host,
-	}
+	reg := cfg.Consul.Agent.Standardize()
+
+	reg.ID = fmt.Sprintf("%v-%v-%v", cfg.Service.Name, cfg.Host, cfg.HTTP.Port)
+	reg.Name = cfg.HTTP.Name
+	reg.Port = cfg.HTTP.GetIntPort()
 
 	return consulsd.NewRegistrar(client, reg, logger), nil
 }
 
 func NewConsulHTTPSRegister(logger log.Logger) (register *consulsd.Registrar, err error)  {
 	var (
-		cfg *config.Config
+		cfg = config.GetConfig()
 		consulClient *api.Client
 		client consulsd.Client
 		apiCfg *api.Config
 	)
 
-	cfg = config.GetConfig()
-
 	apiCfg = cfg.Consul.Client.Standardize()
-	apiCfg.Address = fmt.Sprintf("%s:%d", cfg.Consul.Agent.IP,cfg.Consul.Agent.Port)
 
 	consulClient, err = api.NewClient(apiCfg)
 	if err != nil {
@@ -322,12 +350,10 @@ func NewConsulHTTPSRegister(logger log.Logger) (register *consulsd.Registrar, er
 
 	client = consulsd.NewClient(consulClient)
 
-	reg := &api.AgentServiceRegistration{
-		ID:                fmt.Sprintf("%v-%v-%v", cfg.Service.Name, cfg.Host, cfg.HTTPS.Port),
-		Name:              cfg.HTTPS.Name,
-		Port:              cfg.HTTPS.GetIntPort(),
-		Address:           cfg.Host,
-	}
+	reg := cfg.Consul.Agent.Standardize()
+	reg.ID = fmt.Sprintf("%v-%v-%v", cfg.Service.Name, cfg.Host, cfg.HTTPS.Port)
+	reg.Name = cfg.HTTPS.Name
+	reg.Port = cfg.HTTPS.GetIntPort()
 
 	return consulsd.NewRegistrar(client, reg, logger), nil
 }
