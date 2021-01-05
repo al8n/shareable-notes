@@ -29,6 +29,7 @@ services:
     volumes:
       - /Users/liuguanyan/Developer/margin/share/build/config.yml:/app/config.yml
     ports:
+      - "8081:8080"
       - "50051:50051"
     networks:
       - margin
@@ -90,6 +91,8 @@ services:
     depends_on:
       - cadvisor
       - grafana
+      - share-microservice
+      - gateway
 
   grafana:
     image: grafana/grafana

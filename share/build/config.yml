@@ -50,9 +50,8 @@ consul:
     address: "margin-consul:8500"
     scheme: "http"
 http:
-  runnable: false
   name: "Share-Service-HTTP"
-  port: "8081"
+  port: "8080"
   read-timeout: 15s
   write-timeout: 15s
 grpc:
