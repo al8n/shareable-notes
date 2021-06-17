@@ -1,8 +1,9 @@
 version: "3"
+
 services:
   jaeger:
     image: jaegertracing/all-in-one
-    container_name: "margin-jaeger"
+    container_name: "shareable-notes-jaeger"
     ports:
       - "5775:5775/udp"
       - "6831:6831/udp"
@@ -13,44 +14,53 @@ services:
       - "14250:14250"
       - "9411:9411"
     networks:
-      - margin
+      - shareable-notes
 
   share-microservice:
     build:
-      context: ./share-svc/build
+      context: .
       dockerfile: Dockerfile
-    container_name: "margin-share-service"
+    container_name: "shareable-notes-share-service"
     command: [
-      "--http-runnable=false"
+      "share",
+      "start",
+      "-c",
+      "share-config.yml"
     ]
     environment:
-      JAEGER_AGENT_HOST: margin-jaeger
+      JAEGER_AGENT_HOST: shareable-notes-jaeger
       JAEGER_AGENT_PORT: 6831
     volumes:
-      - ./share-svc/build/config.yml:/app/config.yml
+      - ./conf/share-config.yml:/conf/share-config.yml
     ports:
       - "8081:8080"
       - "50051:50051"
     networks:
-      - margin
+      - shareable-notes
     depends_on:
       - consul
       - jaeger
 
   gateway:
     build:
-      context: ./apigateway/build
+      context: .
       dockerfile: Dockerfile
-    container_name: "margin-gateway"
+    container_name: "shareable-notes-gateway"
+    command: [
+      "gateway",
+      "start",
+      "-c",
+      "gateway-config.yml"
+    ]
     environment:
-      - JAEGER_AGENT_HOST=margin-jaeger
+      - JAEGER_AGENT_HOST=shareable-notes-jaeger
       - JAEGER_AGENT_PORT=6831
     volumes:
-      - ./apigateway/build/config.yml:/app/config.yml
+      - ./conf/gateway-config.yml:/conf/gateway-config.yml
     ports:
       - "8080:8080"
     networks:
-      - margin
+      - shareable-notes
     depends_on:
       - share-microservice
       - consul
@@ -58,34 +68,34 @@ services:
 
   consul:
     image: consul
-    container_name: "margin-consul"
+    container_name: "shareable-notes-consul"
     command: agent -server -bootstrap -ui -client=0.0.0.0
     ports:
       - 8500:8500
       - 8600:8600/udp
     networks:
-      - margin
+      - shareable-notes
 
   mongo:
     image: mongo
-    container_name: "margin-mongo"
+    container_name: "shareable-notes-mongo"
     networks:
-      - margin
+      - shareable-notes
     environment:
       MONGO_INITDB_ROOT_USERNAME: uni
       MONGO_INITDB_ROOT_PASSWORD: secret
     volumes:
-      - margin-mongo:/data/db
+      - shareable-notes-mongo:/data/db
     ports:
       - "27017:27017"
 
   cadvisor:
     image: "gcr.io/google-containers/cadvisor"
-    container_name: "margin-cadvisor"
+    container_name: "shareable-notes-cadvisor"
     ports:
       - "9091:8080"
     networks:
-      - margin
+      - shareable-notes
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -94,11 +104,11 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: "margin-prometheus"
+    container_name: "shareable-notes-prometheus"
     ports:
       - "9090:9090"
     networks:
-      - margin
+      - shareable-notes
     volumes:
       - ./conf/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
@@ -109,27 +119,28 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: "margin-grafana"
+    container_name: "shareable-notes-grafana"
     ports:
       - "9093:3000"
     networks:
-      - margin
+      - shareable-notes
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=margin
+      - GF_SECURITY_ADMIN_PASSWORD=shareable-notes
       - GF_USERS_ALLOW_SIGN_UP=false
 
   node-exporter:
     image: prom/node-exporter
-    container_name: "margin-exporter"
+    container_name: "shareable-notes-exporter"
     ports:
       - "9092:9100"
     networks:
-      - margin
+      - shareable-notes
 
 networks:
-  margin:
-    external: true
+  shareable-notes:
+    external: false
 
 volumes:
-  margin-mongo:
+  shareable-notes-mongo:
     external: false
+

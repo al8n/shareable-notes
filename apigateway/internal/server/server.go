@@ -70,7 +70,7 @@ func (s *Server) Serve() (err error) {
 		jaegerCfg.Reporter.LogSpans = true
 
 		//jaegerCfg.Reporter = &jaegerconfig.ReporterConfig{
-		//	LocalAgentHostPort: "margin-jaeger:6831",
+		//	LocalAgentHostPort: "shareable-notes-jaeger:6831",
 		//	LogSpans: true,
 		//}
 
