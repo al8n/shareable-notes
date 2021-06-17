@@ -3,7 +3,7 @@ package config
 import (
 	"encoding/json"
 	"errors"
-	"github.com/al8n/shareable-notes/share/common"
+	"github.com/al8n/shareable-notes/share-svc/common"
 
 	boothttp "github.com/al8n/micro-boot/http"
 	"github.com/imdario/mergo"

@@ -17,7 +17,7 @@ services:
 
   share-microservice:
     build:
-      context: ./share/build
+      context: ./share-svc/build
       dockerfile: Dockerfile
     container_name: "margin-share-service"
     command: [
@@ -27,7 +27,7 @@ services:
       JAEGER_AGENT_HOST: margin-jaeger
       JAEGER_AGENT_PORT: 6831
     volumes:
-      - /Users/liuguanyan/Developer/margin/share/build/config.yml:/app/config.yml
+      - ./share-svc/build/config.yml:/app/config.yml
     ports:
       - "8081:8080"
       - "50051:50051"
@@ -46,7 +46,7 @@ services:
       - JAEGER_AGENT_HOST=margin-jaeger
       - JAEGER_AGENT_PORT=6831
     volumes:
-      - /Users/liuguanyan/Developer/margin/apigateway/build/config.yml:/app/config.yml
+      - ./apigateway/build/config.yml:/app/config.yml
     ports:
       - "8080:8080"
     networks:
@@ -65,6 +65,19 @@ services:
       - 8600:8600/udp
     networks:
       - margin
+
+  mongo:
+    image: mongo
+    container_name: "margin-mongo"
+    networks:
+      - margin
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: uni
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - margin-mongo:/data/db
+    ports:
+      - "27017:27017"
 
   cadvisor:
     image: "gcr.io/google-containers/cadvisor"
@@ -87,7 +100,7 @@ services:
     networks:
       - margin
     volumes:
-      - /Users/liuguanyan/Developer/margin/conf/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./conf/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
       - cadvisor
       - grafana
@@ -116,3 +129,7 @@ services:
 networks:
   margin:
     external: true
+
+volumes:
+  margin-mongo:
+    external: false
