@@ -1,7 +1,7 @@
 package config
 
 import (
-	bootapi "github.com/ALiuGuanyan/micro-boot/api"
+	bootapi "github.com/al8n/micro-boot/api"
 )
 
 type ShareService struct {

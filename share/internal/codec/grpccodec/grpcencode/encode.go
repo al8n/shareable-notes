@@ -2,11 +2,11 @@ package grpcencode
 
 import (
 	"context"
-	"github.com/ALiuGuanyan/margin/share/internal/codec/grpccodec"
-	"github.com/ALiuGuanyan/margin/share/internal/utils"
-	"github.com/ALiuGuanyan/margin/share/model/requests"
-	"github.com/ALiuGuanyan/margin/share/model/responses"
-	"github.com/ALiuGuanyan/margin/share/pb"
+	"github.com/al8n/shareable-notes/share/internal/codec/grpccodec"
+	"github.com/al8n/shareable-notes/share/internal/utils"
+	"github.com/al8n/shareable-notes/share/model/requests"
+	"github.com/al8n/shareable-notes/share/model/responses"
+	"github.com/al8n/shareable-notes/share/pb"
 )
 
 func ShareNoteRequest(_ context.Context, request interface{}) ( interface{}, error)  {

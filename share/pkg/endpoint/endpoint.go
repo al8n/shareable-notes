@@ -2,12 +2,12 @@ package endpoint
 
 import (
 	"context"
-	"github.com/ALiuGuanyan/margin/share/config"
-	"github.com/ALiuGuanyan/margin/share/internal/utils"
-	"github.com/ALiuGuanyan/margin/share/model/requests"
-	"github.com/ALiuGuanyan/margin/share/model/responses"
-	shareservice "github.com/ALiuGuanyan/margin/share/pkg/service"
-	bootapi "github.com/ALiuGuanyan/micro-boot/api"
+	"github.com/al8n/shareable-notes/share/config"
+	"github.com/al8n/shareable-notes/share/internal/utils"
+	"github.com/al8n/shareable-notes/share/model/requests"
+	"github.com/al8n/shareable-notes/share/model/responses"
+	shareservice "github.com/al8n/shareable-notes/share/pkg/service"
+	bootapi "github.com/al8n/micro-boot/api"
 	"github.com/go-kit/kit/circuitbreaker"
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"

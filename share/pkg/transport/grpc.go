@@ -2,12 +2,12 @@ package transport
 
 import (
 	"context"
-	"github.com/ALiuGuanyan/margin/share/internal/codec/grpccodec/grpcdecode"
-	"github.com/ALiuGuanyan/margin/share/internal/codec/grpccodec/grpcencode"
-	"github.com/ALiuGuanyan/margin/share/pb"
-	serviceendpoint "github.com/ALiuGuanyan/margin/share/pkg/endpoint"
-	shareservice "github.com/ALiuGuanyan/margin/share/pkg/service"
-	bootapi "github.com/ALiuGuanyan/micro-boot/api"
+	"github.com/al8n/shareable-notes/share/internal/codec/grpccodec/grpcdecode"
+	"github.com/al8n/shareable-notes/share/internal/codec/grpccodec/grpcencode"
+	"github.com/al8n/shareable-notes/share/pb"
+	serviceendpoint "github.com/al8n/shareable-notes/share/pkg/endpoint"
+	shareservice "github.com/al8n/shareable-notes/share/pkg/service"
+	bootapi "github.com/al8n/micro-boot/api"
 	"github.com/go-kit/kit/circuitbreaker"
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"

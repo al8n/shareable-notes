@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/ALiuGuanyan/margin/share/config"
-	"github.com/ALiuGuanyan/margin/share/pkg/server"
-	boot "github.com/ALiuGuanyan/micro-boot"
+	"github.com/al8n/shareable-notes/share/config"
+	"github.com/al8n/shareable-notes/share/pkg/server"
+	boot "github.com/al8n/micro-boot"
 	"log"
 )
 

@@ -2,12 +2,12 @@ package server
 
 import (
 	"fmt"
-	"github.com/ALiuGuanyan/margin/share/config"
-	sharepb "github.com/ALiuGuanyan/margin/share/pb"
-	shareendpoint "github.com/ALiuGuanyan/margin/share/pkg/endpoint"
-	shareservice "github.com/ALiuGuanyan/margin/share/pkg/service"
-	sharetransport "github.com/ALiuGuanyan/margin/share/pkg/transport"
-	bootapi "github.com/ALiuGuanyan/micro-boot/api"
+	"github.com/al8n/shareable-notes/share/config"
+	sharepb "github.com/al8n/shareable-notes/share/pb"
+	shareendpoint "github.com/al8n/shareable-notes/share/pkg/endpoint"
+	shareservice "github.com/al8n/shareable-notes/share/pkg/service"
+	sharetransport "github.com/al8n/shareable-notes/share/pkg/transport"
+	bootapi "github.com/al8n/micro-boot/api"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/kit/metrics/prometheus"

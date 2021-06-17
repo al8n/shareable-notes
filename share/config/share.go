@@ -1,8 +1,8 @@
 package config
 
 import (
-	bootapi "github.com/ALiuGuanyan/micro-boot/api"
-	bootflag "github.com/ALiuGuanyan/micro-boot/flag"
+	bootapi "github.com/al8n/micro-boot/api"
+	bootflag "github.com/al8n/micro-boot/flag"
 )
 
 type Share struct {

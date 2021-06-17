@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/ALiuGuanyan/margin/share/internal/repositories"
+	"github.com/al8n/shareable-notes/share/internal/repositories"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
 	stdopentracing "github.com/opentracing/opentracing-go"

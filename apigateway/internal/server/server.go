@@ -1,10 +1,10 @@
 package server
 
 import (
-	"github.com/ALiuGuanyan/margin/apigateway/config"
-	shareendpoint "github.com/ALiuGuanyan/margin/share/pkg/endpoint"
-	shareservice "github.com/ALiuGuanyan/margin/share/pkg/service"
-	sharetransport "github.com/ALiuGuanyan/margin/share/pkg/transport"
+	"github.com/al8n/shareable-notes/apigateway/config"
+	shareendpoint "github.com/al8n/shareable-notes/share/pkg/endpoint"
+	shareservice "github.com/al8n/shareable-notes/share/pkg/service"
+	sharetransport "github.com/al8n/shareable-notes/share/pkg/transport"
 	"github.com/go-kit/kit/log"
 	consulsd "github.com/go-kit/kit/sd/consul"
 	"github.com/gorilla/mux"

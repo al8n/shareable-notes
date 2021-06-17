@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/ALiuGuanyan/margin/apigateway/config"
-	"github.com/ALiuGuanyan/margin/apigateway/internal/server"
-	boot "github.com/ALiuGuanyan/micro-boot"
+	"github.com/al8n/shareable-notes/apigateway/config"
+	"github.com/al8n/shareable-notes/apigateway/internal/server"
+	boot "github.com/al8n/micro-boot"
 	"log"
 )
 

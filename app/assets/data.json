@@ -1,0 +1,787 @@
+{
+  "rootNote": [
+    {
+      "id": "6A663066-2F36-45E3-A367-4136F068D3CA",
+      "mindlinks": null,
+      "createtime": "2021-01-03 13:52:33",
+      "modifytime": "2021-01-03 13:53:31",
+      "title": "软件分类逻辑",
+      "highlight_style": null,
+      "topic": [
+        {
+          "text": "selLst不同"
+        }
+      ]
+    },
+    {
+      "id": "EDF5BB63-1750-4015-91EF-706C773D600E",
+      "mindlinks": null,
+      "createtime": "2021-01-03 13:54:26",
+      "modifytime": "2021-01-03 13:55:04",
+      "title": "软件分类逻辑",
+      "highlight_style": null,
+      "topic": [
+        {
+          "text": "video_ext不同\naudio划框摘录不支持涂鸦"
+        }
+      ]
+    },
+    {
+      "id": "D7F9E103-0A5F-4717-82E8-BE7D5100C78F",
+      "mindlinks": null,
+      "createtime": "2021-01-03 02:59:54",
+      "modifytime": "2021-01-03 03:00:25",
+      "title": "所有使用写字笔和荧光笔的数据逻辑都是这样的",
+      "highlight_style": null,
+      "topic": []
+    },
+    {
+      "id": "423608C6-944D-4A54-B3AE-7D1C9C455548",
+      "mindlinks": [
+        {
+          "id": "FEBC5303-F0FE-419B-9389-0C4F2B9415E2",
+          "mindlinks": null,
+          "createtime": "2021-01-03 06:15:47",
+          "modifytime": "2021-01-03 06:18:50",
+          "title": "摘录功能分类",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": [
+            {
+              "text": "pdf 文本摘录(划重点) 划框摘录 套索摘录(划重点 划框重点)\nepub 文本摘录 划重点\naudio 划框摘录 划框重点\nvideo 划框摘录 划框重点\n"
+            }
+          ]
+        },
+        {
+          "id": "C5A1F41D-AC1A-4285-8B55-4CB245FD5D0E",
+          "mindlinks": [
+            {
+              "id": "AACE4B6F-3979-4AD6-ADD5-A44F04EA64D6",
+              "mindlinks": null,
+              "createtime": "2021-01-03 00:19:13",
+              "modifytime": "2021-01-03 05:06:15",
+              "title": "highlights (size paint pdf_page pdf_rect) 标注图片",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": []
+            }
+          ],
+          "createtime": "2021-01-03 00:19:25",
+          "modifytime": "2021-01-03 00:21:04",
+          "title": "标注图片",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "2190C8F6-B782-43FD-8482-F511D1366472",
+          "mindlinks": [
+            {
+              "id": "D3DC77A5-E2DA-4AA7-A5B2-D9E25511B6F4",
+              "mindlinks": null,
+              "createtime": "2021-01-03 04:40:21",
+              "modifytime": "2021-01-03 05:14:58",
+              "title": "highlights pdf文本摘录(摘录文本 摘录位置 划重点框框 划重点数据)",
+              "highlight_style": "rgb(205,31,30)",
+              "topic": [
+                {
+                  "htext": "機場到城中心約有五十公里的路途。9 1年還沒有現"
+                }
+              ]
+            },
+            {
+              "id": "9183F236-210A-4AA2-90A1-55A10FCD3BED",
+              "mindlinks": [
+                {
+                  "id": "343EC3E2-FD0F-4334-85E5-A2A672361BE1",
+                  "mindlinks": null,
+                  "createtime": "2021-01-03 05:23:27",
+                  "modifytime": "2021-01-03 05:26:42",
+                  "title": "软件逻辑",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "highlight_style\nhighlight_text包含划重点数据\nstartpage\nendpage\nstartpos\nendpos"
+                    }
+                  ]
+                },
+                {
+                  "id": "26A98B98-1F44-484C-8AC1-832460C53F4A",
+                  "mindlinks": [
+                    {
+                      "id": "B329B68F-DC03-4E24-BA9E-4F18DAD2BF8C",
+                      "mindlinks": null,
+                      "createtime": "2021-01-03 05:36:26",
+                      "modifytime": "2021-01-03 05:37:59",
+                      "title": "bug",
+                      "highlight_style": "rgb(252,13,27)",
+                      "topic": [
+                        {
+                          "text": "pdf摘录快速划重点：使用**需要划重点的内容**这样的格式即可快速划重点"
+                        }
+                      ]
+                    }
+                  ],
+                  "createtime": "2021-01-03 05:23:41",
+                  "modifytime": "2021-01-03 05:36:26",
+                  "title": "数据",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "{\n  'id': '9183F236-210A-4AA2-90A1-55A10FCD3BED',\n  'zzindex': 0,\n  'mindlinks': None,\n  'mindclose': None,\n  'groupnoteid': None,\n  'refnoteid': None,\n  'createtime': '2021-01-03 05:15:19',\n  'modifytime': '2021-01-03 05:17:15',\n  'bookmd5': '1dba5e79de0f22514af0c889ce32d1aa8a20adabebdfff624bdccb2bfc9eaaa6',\n  'startpage': 5,\n  'endpage': 5,\n  'startpos': '/html/body/div/div/p[36]/a[2]|740|0.536677',\n  'endpos': '/html/body/div/div/p[36]/a[2]|773',\n  'title': 'highlights epub文本摘录(摘录文本 摘录位置 划重点数据)',\n  'znotes_text': None,\n  'highlight_text': '**hythm of his** mowing are always th',\n  'znotes': None,\n  'highlights': None,\n  'highlight_pic': None,\n  'highlight_style': {\n    'style': '1',\n    'color': 'rgb(205,31,30)'\n  },\n  'medialist': None\n}"
+                    }
+                  ]
+                }
+              ],
+              "createtime": "2021-01-03 05:15:19",
+              "modifytime": "2021-01-03 05:26:06",
+              "title": "highlights epub文本摘录(摘录文本 摘录位置 划重点数据)",
+              "highlight_style": "rgb(205,31,30)",
+              "topic": []
+            }
+          ],
+          "createtime": "2021-01-03 04:39:58",
+          "modifytime": "2021-01-03 05:15:48",
+          "title": "文本摘录",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "EFA1A9CF-2981-49D6-B71C-6C38C48B57CE",
+          "mindlinks": [
+            {
+              "id": "5A405B05-186F-4185-925C-B68E9E79686B",
+              "mindlinks": null,
+              "createtime": "2021-01-03 06:12:19",
+              "modifytime": "2021-01-03 13:14:33",
+              "title": "highlight_pic pdf划框非跨页摘录(size selLst paint maskRects strokes)",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": [
+                {
+                  "hpic": {
+                    "pic": "摘录图片",
+                    "text": "搞得像過年一般, 探棚的哥們一撥接過一撥, 些哥們多半是爲了嗑飽三餐而來的,而 x x 樂隊近人情地做足了面子,每天都盡歡而散,依照, 錄出不一般的東西。 當然這些代價都是由公司段 x x 皆隱——錄者註) 〉 案例中的主角, 早期號稱圈內死嗑隊隊長。 他保傳與操守是令人感佩的。 因爲是他的言行擧止高之精神狀態的每一個細節。這位至今仍教我 9 1 年間,打算爲北京搖滾錄製一張合輯,便到隊。 這支由 x x 所率領剛成立不久的樂隊, 因爲條到他們排練的地方去聽他們的作品並了解樂隊"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "C48246CF-AB53-4E4D-AA13-5AB6207F83BF",
+              "mindlinks": null,
+              "createtime": "2021-01-03 13:03:14",
+              "modifytime": "2021-01-03 13:14:42",
+              "title": "highlight_pic pdf划框跨页摘录(size selLst paint maskRects strokes)",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": [
+                {
+                  "hpic": {
+                    "pic": "摘录图片",
+                    "text": " 現在連東華門的乞兒也都大量絕種,再去東華門也不 11   撞見一個死人,而想到活人  用騷動之都的概念來理解這座城市,是很重要的態度 嚴格的說起來, 從一個臥死街頭的屍體旁走過, 仍能視這具死體就像在這座城中, 司空見慣的其他醉臥街頭的的軀"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "F355932B-B5AF-468A-AACA-E9B098DF8F08",
+              "mindlinks": null,
+              "createtime": "2021-01-03 12:33:45",
+              "modifytime": "2021-01-03 13:50:16",
+              "title": "highlight_pic audio划框摘录(size video_offset video_ext video paint maskRects)",
+              "highlight_style": "rgb(253,128,35)",
+              "topic": [
+                {
+                  "haudio": "音频摘录"
+                }
+              ]
+            },
+            {
+              "id": "C41B27FB-C869-473D-99EF-2D2F51976199",
+              "mindlinks": null,
+              "createtime": "2021-01-03 12:34:18",
+              "modifytime": "2021-01-03 13:50:25",
+              "title": "highlight_pic video划框摘录(size video_offset video_ext video paint maskRects strokes)",
+              "highlight_style": "rgb(253,128,35)",
+              "topic": [
+                {
+                  "hvideo": "视频摘录"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-03 05:52:47",
+          "modifytime": "2021-01-03 13:54:26",
+          "title": "划框摘录",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "8666F2F6-75D2-4123-AD26-139D5442215F",
+          "mindlinks": [
+            {
+              "id": "8B8C1330-4E02-4AE4-8CE9-19167F68DC42",
+              "mindlinks": null,
+              "createtime": "2021-01-03 06:11:28",
+              "modifytime": "2021-01-03 13:14:51",
+              "title": "highlight_pic pdf套索摘录(size selLst paint maskRects strokes)",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": [
+                {
+                  "hpic": {
+                    "pic": "摘录图片",
+                    "text": "下榻處咖啡廳繼續未大伙又吃了頓簡易的教人十足暢快的談話。 因爲這元外匯券,送他上計程車后,返回房 最優雅最不玷污傳統美德的死嗑法。 之後我沒吃到任何東西, 也才會到我那兒去死嗑。 而我的源流我並未做深入了解, 卻可以清楚地會的轉型,死嗑的文質均已變貌。\n段時間, 又煙消雲散。 傳統的,逐漸形成,以「轉外文化投資, 在拋媚眼,裝"
+                  }
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-03 05:53:39",
+          "modifytime": "2021-01-03 12:19:20",
+          "title": "套索摘录",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        }
+      ],
+      "createtime": "2021-01-03 00:18:25",
+      "modifytime": "2021-01-03 15:15:27",
+      "title": "摘录 zhighlights zhighlight_pic",
+      "highlight_style": "rgb(255,255,255)",
+      "topic": []
+    },
+    {
+      "id": "938E788E-7CBF-44B0-92F3-BAB027A226BF",
+      "mindlinks": [
+        {
+          "id": "992B0888-1659-44AC-9600-BD1C48BCE084",
+          "mindlinks": null,
+          "createtime": "2021-01-03 06:19:54",
+          "modifytime": "2021-01-03 06:21:11",
+          "title": "标注功能分类",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": [
+            {
+              "text": "pdf 写字笔 荧光笔 文本框 图片\nepub\naudio\nvideo"
+            }
+          ]
+        },
+        {
+          "id": "8DF6343F-6CCA-4CE6-A3AA-24B3BAAF0212",
+          "mindlinks": [
+            {
+              "id": "7CF450E3-69ED-41B6-8E09-F5C05479DB85",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:34:27",
+              "modifytime": "2021-01-02 23:39:53",
+              "title": "znotes TextNote 编辑笔记卡片 评论",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "text": "第一个评论"
+                }
+              ]
+            },
+            {
+              "id": "6DCA3990-E78F-4A54-BA6F-BA67C6060C93",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:52:21",
+              "modifytime": "2021-01-02 23:53:48",
+              "title": "znotes HtmlNote 编辑笔记卡片 评论",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "text": "第一个评论"
+                }
+              ]
+            },
+            {
+              "id": "957FE0EF-80F4-4412-9A7E-5F233C710A63",
+              "mindlinks": [
+                {
+                  "id": "38AB65A0-1C42-40BF-8164-E00648A30538",
+                  "mindlinks": [
+                    {
+                      "id": "0903F40C-BDC0-442A-A6F4-E416E5506EBF",
+                      "mindlinks": null,
+                      "createtime": "2021-01-03 04:18:17",
+                      "modifytime": "2021-01-03 04:18:23",
+                      "title": "数据",
+                      "highlight_style": "rgb(255,255,255)",
+                      "topic": [
+                        {
+                          "text": "[\n  {\n    'html': 'markdown测试数据\\n',\n    'text': 'markdown测试数据',\n    'medialst': [],\n    'type': 'HtmlNote',\n    'tag': 'MarkDownEditor',\n    'htmlSize': {\n      'sizeval': '{398, 102}',\n      'special': 2\n    }\n  }\n]\n"
+                        }
+                      ]
+                    }
+                  ],
+                  "createtime": "2021-01-03 03:55:27",
+                  "modifytime": "2021-01-03 04:18:17",
+                  "title": "markdown插件测试",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "markdown测试数据"
+                    }
+                  ]
+                },
+                {
+                  "id": "CED480AB-3395-41FD-83F2-E89717BD03BE",
+                  "mindlinks": [
+                    {
+                      "id": "CD6C6053-F547-42A2-94E6-3932BB74D9C0",
+                      "mindlinks": null,
+                      "createtime": "2021-01-03 04:18:28",
+                      "modifytime": "2021-01-03 04:18:47",
+                      "title": "数据",
+                      "highlight_style": "rgb(255,255,255)",
+                      "topic": [
+                        {
+                          "text": "[\n  {\n    'html': 'ckeditor测试数据<br />\\n<img alt=\"\" src=\"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png\" />',\n    'text': 'ckeditor测试数据\\n ',\n    'medialst': [],\n    'type': 'HtmlNote',\n    'tag': 'MNCKEditor',\n    'htmlSize': {\n      'sizeval': '{380, 322}',\n      'special': 2\n    }\n  },\n  {\n    'type': 'TextNote',\n    'text': 'ckeditor插件测试的第一条评论'\n  }\n]"
+                        }
+                      ]
+                    }
+                  ],
+                  "createtime": "2021-01-03 03:57:13",
+                  "modifytime": "2021-01-03 04:19:43",
+                  "title": "ckeditor插件测试",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "ckeditor测试数据\n "
+                    },
+                    {
+                      "text": "ckeditor插件测试的第一条评论"
+                    }
+                  ]
+                }
+              ],
+              "createtime": "2021-01-03 04:19:30",
+              "modifytime": "2021-01-03 04:19:45",
+              "title": "插件评论",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            }
+          ],
+          "createtime": "2021-01-02 23:40:05",
+          "modifytime": "2021-01-03 04:19:30",
+          "title": "添加评论",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "D879DBEA-692B-4C07-9234-C39B36A2315A",
+          "mindlinks": [
+            {
+              "id": "8993C73A-C61F-4E44-9294-0E60237052BC",
+              "mindlinks": null,
+              "createtime": "2021-01-03 05:42:20",
+              "modifytime": "2021-01-03 05:46:19",
+              "title": "逻辑",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "text": "不会改变数据，用sql like语句查看zbooknote表的znotetitle字段与当前节点znotes_text相似的，进行渲染\n"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-03 05:27:09",
+          "modifytime": "2021-01-03 05:42:20",
+          "title": "标题链接",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": [
+            {
+              "text": "标题链接功能"
+            }
+          ]
+        },
+        {
+          "id": "64AB481B-665A-4951-AC14-9DC3D46AEF17",
+          "mindlinks": [
+            {
+              "id": "7E39B04A-E862-4D6D-9AB8-3B3A6F9B5A0D",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:49:18",
+              "modifytime": "2021-01-02 23:49:18",
+              "title": null,
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "text": "znotes TextNote istitle 合并节点1"
+                },
+                {
+                  "text": "znotes TextNote istitle 合并节点2"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-02 23:47:45",
+          "modifytime": "2021-01-02 23:49:18",
+          "title": "合并",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "69162983-7258-4DFD-AB15-6290EAEF0E0D",
+          "mindlinks": [
+            {
+              "id": "07ED2B85-F870-4EC5-B193-B0D6FF63CE83",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:35:25",
+              "modifytime": "2021-01-02 23:37:27",
+              "title": "znotes TextNote 编辑笔记卡片 标签",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "tag": "笔记卡片标签1"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-02 23:39:47",
+          "modifytime": "2021-01-02 23:40:32",
+          "title": "标签",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "3CD44EAA-AB15-407B-9C59-B42B8CFB2DF8",
+          "mindlinks": [
+            {
+              "id": "25193529-58D2-4307-BA53-A48B6DB4AE22",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:41:24",
+              "modifytime": "2021-01-02 23:45:26",
+              "title": "znotes TextNote 编辑笔记卡片 链接节点1",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            },
+            {
+              "id": "5130B572-466A-4758-9B4A-8A5FBE05F540",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:43:13",
+              "modifytime": "2021-01-03 01:08:07",
+              "title": "znotes TextNote 编辑笔记卡片 链接节点2",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            }
+          ],
+          "createtime": "2021-01-02 23:41:15",
+          "modifytime": "2021-01-03 01:07:48",
+          "title": "链接",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "0F13D714-F9CB-4472-AA44-CB50E94B39F5",
+          "mindlinks": [
+            {
+              "id": "CF2AC613-8810-4339-B880-4F7B7BD4F4A9",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:49:58",
+              "modifytime": "2021-01-02 23:50:28",
+              "title": "概要1",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            },
+            {
+              "id": "071E3DC5-7075-402F-922B-A33B7015B382",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:50:28",
+              "modifytime": "2021-01-02 23:50:31",
+              "title": "概要2",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            }
+          ],
+          "createtime": "2021-01-02 23:49:35",
+          "modifytime": "2021-01-02 23:50:35",
+          "title": "概要",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "33055CC5-D412-4E30-88F0-A53C1DF0E684",
+          "mindlinks": [
+            {
+              "id": "CB98D374-0458-4021-99C3-AA47CB05C7FE",
+              "mindlinks": null,
+              "createtime": "2021-01-03 00:01:20",
+              "modifytime": "2021-01-03 06:22:24",
+              "title": null,
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "text": "znotes LinkNote 合并文本摘录节点"
+                },
+                {
+                  "htext": "化簡稱爲爛,一本在"
+                },
+                {
+                  "text": "znotes LinkNote q_hpic 合并划框摘录节点"
+                },
+                {
+                  "hpic": {
+                    "pic": "摘录图片",
+                    "text": "不可以, 老外寫北京搖滾的文稿加起都可以出好幾本書, 都其實你也可以寫本玩玩,只要在書中,版權頁上注明「本文責」就可以了。何況這本書所寫的是搖滾最重要的本質,惡比較不幸被用來引申擧例罷了。 其實惡化這個搖滾最重要的有北京獨獲殊榮。 滾客的惡化現象是種美妙絕倫的病態, 它會去理解他們,也就是不拿他們當回事了。 \n 滾客的惡質就是可以死皮賴臉地和你胡攪蠻纏, 又會搞是這樣。在本書中我大量運用最簡單的文字,翻來覆去的用接去表達所要傳訴的主題, 我偏愛直截和粗糙, 那是龐克的"
+                  }
+                },
+                {
+                  "text": "znotes LinkNote q_hpic 合并套索摘录节点"
+                },
+                {
+                  "hpic": {
+                    "pic": "摘录图片",
+                    "text": ",而且讀者必須來回如此一來就比較爛了。\n果這還不夠爛, 還有一招就都沒太大關係, 也許就非讓你覺得"
+                  }
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-02 23:57:05",
+          "modifytime": "2021-01-03 00:01:20",
+          "title": "合并",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "4E60444C-256F-4DE6-8403-137A8BCEE587",
+          "mindlinks": [
+            {
+              "id": "076C75A8-4C64-4DA3-B368-A982FA82C6CA",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:26:01",
+              "modifytime": "2021-01-02 23:31:19",
+              "title": "znotes AudioNote 编辑笔记卡片 录音",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "audio": "卡片录音"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-02 23:39:27",
+          "modifytime": "2021-01-02 23:39:34",
+          "title": "录音",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "42AC69C4-1ADF-425A-BC96-B0922686C7A4",
+          "mindlinks": [
+            {
+              "id": "874EAE41-BD0A-4E54-8004-E81431A81BD1",
+              "mindlinks": [
+                {
+                  "id": "50A180C2-9C9D-4963-A7B8-B6A60AFE9D39",
+                  "mindlinks": null,
+                  "createtime": "2021-01-03 02:31:12",
+                  "modifytime": "2021-01-03 02:31:46",
+                  "title": "数据",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "{\n  'strokes': [\n    {\n      'points': [\n        {\n          'pointval': '{115.11309814453125, 134.74392700195312}',\n          'special': 1\n        },\n        {\n          'pointval': '{115.11309814453125, 379.44439697265625}',\n          'special': 1\n        },\n        {\n          'pointval': '{115.11309814453125, 379.44439697265625}',\n          'special': 1\n        }\n      ],\n      'color': '0.32549 0.843137 0.411765 1',\n      'rect': {\n        'rectval': '{{114.31309813261032, 133.9439269900322}, {1.6000000238418579, 246.30046999454498}}',\n        'special': 3\n      },\n      'weights': [\n        1.600000023841858,\n        1.600000023841858,\n        1.600000023841858\n      ]\n    },\n    {\n      'points': [\n        {\n          'pointval': '{253.1119384765625, 190.76602172851562}',\n          'special': 1\n        },\n        {\n          'pointval': '{253.1119384765625, 439.9765625}',\n          'special': 1\n        },\n        {\n          'pointval': '{253.1119384765625, 439.9765625}',\n          'special': 1\n        }\n      ],\n      'weights': [\n        23.46666717529297,\n        23.46666717529297,\n        23.46666717529297\n      ],\n      'rect': {\n        'rectval': '{{241.37860488891602, 179.03268814086914}, {23.466667175292969, 272.67720794677734}}',\n        'special': 3\n      },\n      'color': '0.3 0.3 0 0.3'\n    }\n  ],\n  'size': {\n    'sizeval': '{640, 461.70989608764648}',\n    'special': 2\n  },\n  'type': 'PaintNote'\n}\n"
+                    }
+                  ]
+                },
+                {
+                  "id": "CAAFD32F-75A9-4B64-8F03-1B5F5B28ECE2",
+                  "mindlinks": null,
+                  "createtime": "2021-01-03 02:50:32",
+                  "modifytime": "2021-01-03 02:51:47",
+                  "title": "软件逻辑",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "如果写字笔和荧光笔都是直线，那么直接是数据"
+                    }
+                  ]
+                }
+              ],
+              "createtime": "2021-01-02 23:33:15",
+              "modifytime": "2021-01-03 02:50:32",
+              "title": "znotes PaintNote strokes 编辑笔记卡片 涂鸦 直接是数据",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            },
+            {
+              "id": "DF2096F8-2470-478A-879A-C139B9374DBE",
+              "mindlinks": [
+                {
+                  "id": "34DFB0B4-550C-4DA9-A469-EA810138F6EE",
+                  "mindlinks": null,
+                  "createtime": "2021-01-03 02:52:01",
+                  "modifytime": "2021-01-03 02:53:41",
+                  "title": "软件逻辑",
+                  "highlight_style": "rgb(255,255,255)",
+                  "topic": [
+                    {
+                      "text": "如果写字板和荧光笔有直线也有曲线。整个轨迹的数据是压缩的，里面的每一条直线是直接的数据，每一条曲线是压缩的数据"
+                    }
+                  ]
+                }
+              ],
+              "createtime": "2021-01-02 23:32:27",
+              "modifytime": "2021-01-03 02:52:01",
+              "title": "znotes PaintNote strokes 编辑笔记卡片 涂鸦 数据来自media表",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": []
+            }
+          ],
+          "createtime": "2021-01-02 23:38:41",
+          "modifytime": "2021-01-03 02:59:54",
+          "title": "涂鸦",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "82A01202-1889-473F-BF95-F95FE945BEB5",
+          "mindlinks": [
+            {
+              "id": "54368098-28FD-4407-B9DF-81012CDA1464",
+              "mindlinks": null,
+              "createtime": "2021-01-02 23:28:09",
+              "modifytime": "2021-01-02 23:31:39",
+              "title": "znotes PaintNote paint 编辑笔记卡片 图片",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "photo": "卡片照片"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-02 23:39:37",
+          "modifytime": "2021-01-02 23:39:44",
+          "title": "图片",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "B6CB1A3D-6987-40CB-A20B-514C54564DB1",
+          "mindlinks": [
+            {
+              "id": "CB899512-CA37-4FA6-B8AB-2AD23B510C0D",
+              "mindlinks": null,
+              "createtime": "2021-01-03 01:36:43",
+              "modifytime": "2021-01-03 01:37:40",
+              "title": "znotes PaintNote 编辑笔记卡片 图片涂鸦",
+              "highlight_style": "rgb(255,255,255)",
+              "topic": [
+                {
+                  "photo": "卡片照片"
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-03 01:35:41",
+          "modifytime": "2021-01-03 01:36:43",
+          "title": "图片涂鸦",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        },
+        {
+          "id": "C2EABC95-588A-46D9-AF26-FA7D0681D328",
+          "mindlinks": [
+            {
+              "id": "DC00E4C1-515A-4DC4-8FA3-9F8D29F807AC",
+              "mindlinks": null,
+              "createtime": "2021-01-03 00:11:21",
+              "modifytime": "2021-01-03 00:12:45",
+              "title": "znotes SketchNote Stroke 标注写字笔 标注荧光笔 直接是数据",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": []
+            },
+            {
+              "id": "6D6A1787-27D3-47D6-AFD5-EA258B210AE4",
+              "mindlinks": null,
+              "createtime": "2021-01-03 00:13:03",
+              "modifytime": "2021-01-03 03:54:58",
+              "title": "znotes SketchNote Stroke 标注写字笔 标注荧光笔 zip压缩的数据",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": []
+            },
+            {
+              "id": "38241391-2F54-452F-B095-B1F074977456",
+              "mindlinks": null,
+              "createtime": "2021-01-03 00:14:52",
+              "modifytime": "2021-01-03 00:15:41",
+              "title": "znotes SketchNote TextBox rtf 标注文本框",
+              "highlight_style": "rgb(174,211,253)",
+              "topic": [
+                {
+                  "hpic": {
+                    "pic": "摘录图片",
+                    "text": "    "
+                  }
+                }
+              ]
+            }
+          ],
+          "createtime": "2021-01-03 00:11:26",
+          "modifytime": "2021-01-03 03:32:30",
+          "title": "标注",
+          "highlight_style": "rgb(255,255,255)",
+          "topic": []
+        }
+      ],
+      "createtime": "2021-01-02 23:38:29",
+      "modifytime": "2021-01-03 15:15:27",
+      "title": "标注和编辑笔记卡片 znotes",
+      "highlight_style": "rgb(255,255,255)",
+      "topic": []
+    },
+    {
+      "id": "97EE57AE-14DD-4C91-8A9A-030E4F2F20D5",
+      "mindlinks": null,
+      "createtime": "2021-01-03 03:32:30",
+      "modifytime": "2021-01-03 03:35:52",
+      "title": "软件逻辑",
+      "highlight_style": null,
+      "topic": [
+        {
+          "text": "一页的写字笔、荧光笔、标注文本框为数据库中的一条数据"
+        }
+      ]
+    },
+    {
+      "id": "2C454303-7DBA-42E4-AB70-4AA165E8A493",
+      "mindlinks": null,
+      "createtime": "2021-01-02 23:50:35",
+      "modifytime": "2021-01-02 23:51:56",
+      "title": "znotes TextNote 概要节点",
+      "highlight_style": null,
+      "topic": []
+    }
+  ],
+  "noNote": [],
+  "linkNote": {
+    "25193529-58D2-4307-BA53-A48B6DB4AE22": "5130B572-466A-4758-9B4A-8A5FBE05F540",
+    "5130B572-466A-4758-9B4A-8A5FBE05F540": "25193529-58D2-4307-BA53-A48B6DB4AE22"
+  },
+  "summaryNote": {
+    "2C454303-7DBA-42E4-AB70-4AA165E8A493": [
+      "CF2AC613-8810-4339-B880-4F7B7BD4F4A9",
+      "071E3DC5-7075-402F-922B-A33B7015B382"
+    ],
+    "D7F9E103-0A5F-4717-82E8-BE7D5100C78F": [
+      "CAAFD32F-75A9-4B64-8F03-1B5F5B28ECE2",
+      "34DFB0B4-550C-4DA9-A469-EA810138F6EE"
+    ],
+    "97EE57AE-14DD-4C91-8A9A-030E4F2F20D5": [
+      "DC00E4C1-515A-4DC4-8FA3-9F8D29F807AC",
+      "6D6A1787-27D3-47D6-AFD5-EA258B210AE4",
+      "38241391-2F54-452F-B095-B1F074977456"
+    ],
+    "6A663066-2F36-45E3-A367-4136F068D3CA": [
+      "5A405B05-186F-4185-925C-B68E9E79686B",
+      "C48246CF-AB53-4E4D-AA13-5AB6207F83BF",
+      "8B8C1330-4E02-4AE4-8CE9-19167F68DC42"
+    ],
+    "EDF5BB63-1750-4015-91EF-706C773D600E": [
+      "F355932B-B5AF-468A-AACA-E9B098DF8F08",
+      "C41B27FB-C869-473D-99EF-2D2F51976199"
+    ]
+  },
+  "metadata": {
+    "id": "65B1F642-0725-47EB-A708-B45197E4B855",
+    "title": "test_脑图节点解析"
+  }
+}

@@ -3,9 +3,9 @@ package config
 import (
 	"encoding/json"
 	"errors"
-	"github.com/ALiuGuanyan/margin/share/common"
+	"github.com/al8n/shareable-notes/share/common"
 
-	boothttp "github.com/ALiuGuanyan/micro-boot/http"
+	boothttp "github.com/al8n/micro-boot/http"
 	"github.com/imdario/mergo"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	bootflag "github.com/ALiuGuanyan/micro-boot/flag"
+	bootflag "github.com/al8n/micro-boot/flag"
 )
 
 var (

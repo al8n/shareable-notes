@@ -2,9 +2,9 @@ package grpcdecode
 
 import (
 	"context"
-	"github.com/ALiuGuanyan/margin/share/internal/codec/grpccodec"
-	"github.com/ALiuGuanyan/margin/share/model/requests"
-	"github.com/ALiuGuanyan/margin/share/pb"
+	"github.com/al8n/shareable-notes/share/internal/codec/grpccodec"
+	"github.com/al8n/shareable-notes/share/model/requests"
+	"github.com/al8n/shareable-notes/share/pb"
 )
 
 func ShareNoteRequest(_ context.Context, grpcReq interface{}) (interface{}, error)  {

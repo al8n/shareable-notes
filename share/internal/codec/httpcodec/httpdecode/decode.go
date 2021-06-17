@@ -5,8 +5,8 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"github.com/ALiuGuanyan/margin/share/model/requests"
-	"github.com/ALiuGuanyan/margin/share/model/responses"
+	"github.com/al8n/shareable-notes/share/model/requests"
+	"github.com/al8n/shareable-notes/share/model/responses"
 	"github.com/gorilla/mux"
 	"net/http"
 )

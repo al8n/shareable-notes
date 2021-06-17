@@ -1,9 +1,9 @@
 package grpccodec
 
 import (
-	"github.com/ALiuGuanyan/margin/share/model/requests"
-	"github.com/ALiuGuanyan/margin/share/model/responses"
-	"github.com/ALiuGuanyan/margin/share/pb"
+	"github.com/al8n/shareable-notes/share/model/requests"
+	"github.com/al8n/shareable-notes/share/model/responses"
+	"github.com/al8n/shareable-notes/share/pb"
 )
 
 
